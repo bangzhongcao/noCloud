@@ -1,0 +1,29 @@
+@import "./variable.less";
+
+body, html{
+	height: 100%;
+	line-height: 1;
+	font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+	user-select: text;
+	-webkit-tap-highlight-color: transparent;
+	background: @colorBackground;
+	color: @colorText;
+}
+// 设置element UI 中的一些全局css
+// 消息提示框的定位离顶部的距离
+body .pop-mess{
+	top:130px !important;
+}
+// 更多操作下拉面板的宽度
+.restartItem{
+	min-width: 100px !important;
+}
+
+[class^="el-icon-fa"], [class*=" el-icon-fa"] {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome!important;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}

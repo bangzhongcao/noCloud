@@ -1,0 +1,934 @@
+{
+	"instance-list":[
+	  {
+	    "ip": "10.1.21.2",
+	    "name": "string",
+	    "project": "ec2平台测试",
+	    "create_by": "bangzhongcao",
+	    "host": "l_1_14-10.18.0.14",
+	    "power_state": "RUNNING",
+	    "os_type": "CentOS-7.2-server_1116",
+	    "flavor": {
+	      "cpu": 0,
+	      "memory": 0,
+	      "root_disk": 0,
+	      "ephemeral_disk": 0
+	    },
+	    "volumes": [
+	      {
+	        "name": "cbz",
+	        "project": "string",
+	        "size": 1,
+	        "status": "available/in-use等",
+	        "create_by": "string",
+	        "availability_zone": "string",
+	        "attachements": "string",
+	        "host": "string",
+	        "created": "string"
+	      }
+	    ],
+	    "status": "MIGRATING",
+	    "availability_zone": "亦庄",
+	    "created": "2017/10/15 15:36"
+	  },
+	  {
+	    "ip": "10.1.21.2",
+	    "name": "string",
+	    "project": "ec2平台测试",
+	    "create_by": "bangzhongcao",
+	    "host": "l_1_14-10.18.0.14",
+	    "power_state": "RUNNING",
+	    "os_type": "CentOS-7.2-server_1116",
+	    "flavor": {
+	      "cpu": 0,
+	      "memory": 0,
+	      "root_disk": 0,
+	      "ephemeral_disk": 0
+	    },
+	    "volumes": [
+	      {
+	        "name": "cbz",
+	        "project": "string",
+	        "size": 1,
+	        "status": "available/in-use等",
+	        "create_by": "string",
+	        "availability_zone": "string",
+	        "attachements": "string",
+	        "host": "string",
+	        "created": "string"
+	      }
+	    ],
+	    "status": "MIGRATING",
+	    "availability_zone": "亦庄",
+	    "created": "2017/10/15 15:36"
+	  },
+	  {
+	    "ip": "10.1.21.2",
+	    "name": "string",
+	    "project": "ec2平台测试",
+	    "create_by": "bangzhongcao",
+	    "host": "l_1_14-10.18.0.14",
+	    "power_state": "RUNNING",
+	    "os_type": "CentOS-7.2-server_1116",
+	    "flavor": {
+	      "cpu": 0,
+	      "memory": 0,
+	      "root_disk": 0,
+	      "ephemeral_disk": 0
+	    },
+	    "volumes": [
+	      {
+	        "name": "cbz",
+	        "project": "string",
+	        "size": 1,
+	        "status": "available/in-use等",
+	        "create_by": "string",
+	        "availability_zone": "string",
+	        "attachements": "string",
+	        "host": "string",
+	        "created": "string"
+	      }
+	    ],
+	    "status": "MIGRATING",
+	    "availability_zone": "亦庄",
+	    "created": "2017/10/15 15:36"
+	  },
+	  {
+	    "ip": "10.1.21.2",
+	    "name": "string",
+	    "project": "ec2平台测试",
+	    "create_by": "bangzhongcao",
+	    "host": "l_1_14-10.18.0.14",
+	    "power_state": "RUNNING",
+	    "os_type": "CentOS-7.2-server_1116",
+	    "flavor": {
+	      "cpu": 0,
+	      "memory": 0,
+	      "root_disk": 0,
+	      "ephemeral_disk": 0
+	    },
+	    "volumes": [
+	      {
+	        "name": "cbz",
+	        "project": "string",
+	        "size": 1,
+	        "status": "available/in-use等",
+	        "create_by": "string",
+	        "availability_zone": "string",
+	        "attachements": "string",
+	        "host": "string",
+	        "created": "string"
+	      }
+	    ],
+	    "status": "MIGRATING",
+	    "availability_zone": "亦庄",
+	    "created": "2017/10/15 15:36"
+	  },
+	  {
+	    "ip": "10.1.21.2",
+	    "name": "string",
+	    "project": "ec2平台测试",
+	    "create_by": "bangzhongcao",
+	    "host": "l_1_14-10.18.0.14",
+	    "power_state": "RUNNING",
+	    "os_type": "CentOS-7.2-server_1116",
+	    "flavor": {
+	      "cpu": 0,
+	      "memory": 0,
+	      "root_disk": 0,
+	      "ephemeral_disk": 0
+	    },
+	    "volumes": [
+	      {
+	        "name": "cbz",
+	        "project": "string",
+	        "size": 1,
+	        "status": "available/in-use等",
+	        "create_by": "string",
+	        "availability_zone": "string",
+	        "attachements": "string",
+	        "host": "string",
+	        "created": "string"
+	      }
+	    ],
+	    "status": "MIGRATING",
+	    "availability_zone": "亦庄",
+	    "created": "2017/10/15 15:36"
+	  },
+	  {
+	    "ip": "10.1.21.2",
+	    "name": "string",
+	    "project": "ec2平台测试",
+	    "create_by": "bangzhongcao",
+	    "host": "l_1_14-10.18.0.14",
+	    "power_state": "RUNNING",
+	    "os_type": "CentOS-7.2-server_1116",
+	    "flavor": {
+	      "cpu": 0,
+	      "memory": 0,
+	      "root_disk": 0,
+	      "ephemeral_disk": 0
+	    },
+	    "volumes": [
+	      {
+	        "name": "cbz",
+	        "project": "string",
+	        "size": 1,
+	        "status": "available/in-use等",
+	        "create_by": "string",
+	        "availability_zone": "string",
+	        "attachements": "string",
+	        "host": "string",
+	        "created": "string"
+	      }
+	    ],
+	    "status": "MIGRATING",
+	    "availability_zone": "亦庄",
+	    "created": "2017/10/15 15:36"
+	  },
+	  {
+	    "ip": "10.1.21.2",
+	    "name": "string",
+	    "project": "ec2平台测试",
+	    "create_by": "bangzhongcao",
+	    "host": "l_1_14-10.18.0.14",
+	    "power_state": "RUNNING",
+	    "os_type": "CentOS-7.2-server_1116",
+	    "flavor": {
+	      "cpu": 0,
+	      "memory": 0,
+	      "root_disk": 0,
+	      "ephemeral_disk": 0
+	    },
+	    "volumes": [
+	      {
+	        "name": "cbz",
+	        "project": "string",
+	        "size": 1,
+	        "status": "available/in-use等",
+	        "create_by": "string",
+	        "availability_zone": "string",
+	        "attachements": "string",
+	        "host": "string",
+	        "created": "string"
+	      }
+	    ],
+	    "status": "MIGRATING",
+	    "availability_zone": "亦庄",
+	    "created": "2017/10/15 15:36"
+	  },
+	  {
+	    "ip": "10.1.21.2",
+	    "name": "string",
+	    "project": "ec2平台测试",
+	    "create_by": "bangzhongcao",
+	    "host": "l_1_14-10.18.0.14",
+	    "power_state": "RUNNING",
+	    "os_type": "CentOS-7.2-server_1116",
+	    "flavor": {
+	      "cpu": 0,
+	      "memory": 0,
+	      "root_disk": 0,
+	      "ephemeral_disk": 0
+	    },
+	    "volumes": [
+	      {
+	        "name": "cbz",
+	        "project": "string",
+	        "size": 1,
+	        "status": "available/in-use等",
+	        "create_by": "string",
+	        "availability_zone": "string",
+	        "attachements": "string",
+	        "host": "string",
+	        "created": "string"
+	      }
+	    ],
+	    "status": "MIGRATING",
+	    "availability_zone": "亦庄",
+	    "created": "2017/10/15 15:36"
+	  },
+	  {
+	    "ip": "10.1.21.2",
+	    "name": "string",
+	    "project": "ec2平台测试",
+	    "create_by": "bangzhongcao",
+	    "host": "l_1_14-10.18.0.14",
+	    "power_state": "RUNNING",
+	    "os_type": "CentOS-7.2-server_1116",
+	    "flavor": {
+	      "cpu": 0,
+	      "memory": 0,
+	      "root_disk": 0,
+	      "ephemeral_disk": 0
+	    },
+	    "volumes": [
+	      {
+	        "name": "cbz",
+	        "project": "string",
+	        "size": 1,
+	        "status": "available/in-use等",
+	        "create_by": "string",
+	        "availability_zone": "string",
+	        "attachements": "string",
+	        "host": "string",
+	        "created": "string"
+	      }
+	    ],
+	    "status": "MIGRATING",
+	    "availability_zone": "亦庄",
+	    "created": "2017/10/15 15:36"
+	  },
+	  {
+	    "ip": "10.1.21.2",
+	    "name": "string",
+	    "project": "ec2平台测试",
+	    "create_by": "bangzhongcao",
+	    "host": "l_1_14-10.18.0.14",
+	    "power_state": "RUNNING",
+	    "os_type": "CentOS-7.2-server_1116",
+	    "flavor": {
+	      "cpu": 0,
+	      "memory": 0,
+	      "root_disk": 0,
+	      "ephemeral_disk": 0
+	    },
+	    "volumes": [
+	      {
+	        "name": "cbz",
+	        "project": "string",
+	        "size": 1,
+	        "status": "available/in-use等",
+	        "create_by": "string",
+	        "availability_zone": "string",
+	        "attachements": "string",
+	        "host": "string",
+	        "created": "string"
+	      }
+	    ],
+	    "status": "MIGRATING",
+	    "availability_zone": "亦庄",
+	    "created": "2017/10/15 15:36"
+	  },
+	  {
+	    "ip": "10.1.21.2",
+	    "name": "string",
+	    "project": "ec2平台测试",
+	    "create_by": "bangzhongcao",
+	    "host": "l_1_14-10.18.0.14",
+	    "power_state": "RUNNING",
+	    "os_type": "CentOS-7.2-server_1116",
+	    "flavor": {
+	      "cpu": 0,
+	      "memory": 0,
+	      "root_disk": 0,
+	      "ephemeral_disk": 0
+	    },
+	    "volumes": [
+	      {
+	        "name": "cbz",
+	        "project": "string",
+	        "size": 1,
+	        "status": "available/in-use等",
+	        "create_by": "string",
+	        "availability_zone": "string",
+	        "attachements": "string",
+	        "host": "string",
+	        "created": "string"
+	      }
+	    ],
+	    "status": "MIGRATING",
+	    "availability_zone": "亦庄",
+	    "created": "2017/10/15 15:36"
+	  },
+	  {
+	    "ip": "10.1.21.2",
+	    "name": "string",
+	    "project": "ec2平台测试",
+	    "create_by": "bangzhongcao",
+	    "host": "l_1_14-10.18.0.14",
+	    "power_state": "RUNNING",
+	    "os_type": "CentOS-7.2-server_1116",
+	    "flavor": {
+	      "cpu": 0,
+	      "memory": 0,
+	      "root_disk": 0,
+	      "ephemeral_disk": 0
+	    },
+	    "volumes": [
+	      {
+	        "name": "cbz",
+	        "project": "string",
+	        "size": 1,
+	        "status": "available/in-use等",
+	        "create_by": "string",
+	        "availability_zone": "string",
+	        "attachements": "string",
+	        "host": "string",
+	        "created": "string"
+	      }
+	    ],
+	    "status": "MIGRATING",
+	    "availability_zone": "亦庄",
+	    "created": "2017/10/15 15:36"
+	  },
+	  {
+	    "ip": "10.1.21.2",
+	    "name": "string",
+	    "project": "ec2平台测试",
+	    "create_by": "bangzhongcao",
+	    "host": "l_1_14-10.18.0.14",
+	    "power_state": "RUNNING",
+	    "os_type": "CentOS-7.2-server_1116",
+	    "flavor": {
+	      "cpu": 0,
+	      "memory": 0,
+	      "root_disk": 0,
+	      "ephemeral_disk": 0
+	    },
+	    "volumes": [
+	      {
+	        "name": "cbz",
+	        "project": "string",
+	        "size": 1,
+	        "status": "available/in-use等",
+	        "create_by": "string",
+	        "availability_zone": "string",
+	        "attachements": "string",
+	        "host": "string",
+	        "created": "string"
+	      }
+	    ],
+	    "status": "MIGRATING",
+	    "availability_zone": "亦庄",
+	    "created": "2017/10/15 15:36"
+	  },
+	  {
+	    "ip": "10.1.21.2",
+	    "name": "string",
+	    "project": "ec2平台测试",
+	    "create_by": "bangzhongcao",
+	    "host": "l_1_14-10.18.0.14",
+	    "power_state": "RUNNING",
+	    "os_type": "CentOS-7.2-server_1116",
+	    "flavor": {
+	      "cpu": 0,
+	      "memory": 0,
+	      "root_disk": 0,
+	      "ephemeral_disk": 0
+	    },
+	    "volumes": [
+	      {
+	        "name": "cbz",
+	        "project": "string",
+	        "size": 1,
+	        "status": "available/in-use等",
+	        "create_by": "string",
+	        "availability_zone": "string",
+	        "attachements": "string",
+	        "host": "string",
+	        "created": "string"
+	      }
+	    ],
+	    "status": "MIGRATING",
+	    "availability_zone": "亦庄",
+	    "created": "2017/10/15 15:36"
+	  },
+	  {
+	    "ip": "10.1.21.2",
+	    "name": "string",
+	    "project": "ec2平台测试",
+	    "create_by": "bangzhongcao",
+	    "host": "l_1_14-10.18.0.14",
+	    "power_state": "RUNNING",
+	    "os_type": "CentOS-7.2-server_1116",
+	    "flavor": {
+	      "cpu": 0,
+	      "memory": 0,
+	      "root_disk": 0,
+	      "ephemeral_disk": 0
+	    },
+	    "volumes": [
+	      {
+	        "name": "cbz",
+	        "project": "string",
+	        "size": 1,
+	        "status": "available/in-use等",
+	        "create_by": "string",
+	        "availability_zone": "string",
+	        "attachements": "string",
+	        "host": "string",
+	        "created": "string"
+	      }
+	    ],
+	    "status": "MIGRATING",
+	    "availability_zone": "亦庄",
+	    "created": "2017/10/15 15:36"
+	  },
+	  {
+	    "ip": "10.1.21.2",
+	    "name": "string",
+	    "project": "ec2平台测试",
+	    "create_by": "bangzhongcao",
+	    "host": "l_1_14-10.18.0.14",
+	    "power_state": "RUNNING",
+	    "os_type": "CentOS-7.2-server_1116",
+	    "flavor": {
+	      "cpu": 0,
+	      "memory": 0,
+	      "root_disk": 0,
+	      "ephemeral_disk": 0
+	    },
+	    "volumes": [
+	      {
+	        "name": "cbz",
+	        "project": "string",
+	        "size": 1,
+	        "status": "available/in-use等",
+	        "create_by": "string",
+	        "availability_zone": "string",
+	        "attachements": "string",
+	        "host": "string",
+	        "created": "string"
+	      }
+	    ],
+	    "status": "MIGRATING",
+	    "availability_zone": "亦庄",
+	    "created": "2017/10/15 15:36"
+	  },
+	  {
+	    "ip": "10.1.21.2",
+	    "name": "string",
+	    "project": "ec2平台测试",
+	    "create_by": "bangzhongcao",
+	    "host": "l_1_14-10.18.0.14",
+	    "power_state": "RUNNING",
+	    "os_type": "CentOS-7.2-server_1116",
+	    "flavor": {
+	      "cpu": 0,
+	      "memory": 0,
+	      "root_disk": 0,
+	      "ephemeral_disk": 0
+	    },
+	    "volumes": [
+	      {
+	        "name": "cbz",
+	        "project": "string",
+	        "size": 1,
+	        "status": "available/in-use等",
+	        "create_by": "string",
+	        "availability_zone": "string",
+	        "attachements": "string",
+	        "host": "string",
+	        "created": "string"
+	      }
+	    ],
+	    "status": "MIGRATING",
+	    "availability_zone": "亦庄",
+	    "created": "2017/10/15 15:36"
+	  },
+	  {
+	    "ip": "10.1.21.2",
+	    "name": "string",
+	    "project": "ec2平台测试",
+	    "create_by": "bangzhongcao",
+	    "host": "l_1_14-10.18.0.14",
+	    "power_state": "RUNNING",
+	    "os_type": "CentOS-7.2-server_1116",
+	    "flavor": {
+	      "cpu": 0,
+	      "memory": 0,
+	      "root_disk": 0,
+	      "ephemeral_disk": 0
+	    },
+	    "volumes": [
+	      {
+	        "name": "cbz",
+	        "project": "string",
+	        "size": 1,
+	        "status": "available/in-use等",
+	        "create_by": "string",
+	        "availability_zone": "string",
+	        "attachements": "string",
+	        "host": "string",
+	        "created": "string"
+	      }
+	    ],
+	    "status": "MIGRATING",
+	    "availability_zone": "亦庄",
+	    "created": "2017/10/15 15:36"
+	  },
+	  {
+	    "ip": "10.1.21.2",
+	    "name": "string",
+	    "project": "ec2平台测试",
+	    "create_by": "bangzhongcao",
+	    "host": "l_1_14-10.18.0.14",
+	    "power_state": "RUNNING",
+	    "os_type": "CentOS-7.2-server_1116",
+	    "flavor": {
+	      "cpu": 0,
+	      "memory": 0,
+	      "root_disk": 0,
+	      "ephemeral_disk": 0
+	    },
+	    "volumes": [
+	      {
+	        "name": "cbz",
+	        "project": "string",
+	        "size": 1,
+	        "status": "available/in-use等",
+	        "create_by": "string",
+	        "availability_zone": "string",
+	        "attachements": "string",
+	        "host": "string",
+	        "created": "string"
+	      }
+	    ],
+	    "status": "MIGRATING",
+	    "availability_zone": "亦庄",
+	    "created": "2017/10/15 15:36"
+	  },
+	  {
+	    "ip": "10.1.21.2",
+	    "name": "string",
+	    "project": "ec2平台测试",
+	    "create_by": "bangzhongcao",
+	    "host": "l_1_14-10.18.0.14",
+	    "power_state": "RUNNING",
+	    "os_type": "CentOS-7.2-server_1116",
+	    "flavor": {
+	      "cpu": 0,
+	      "memory": 0,
+	      "root_disk": 0,
+	      "ephemeral_disk": 0
+	    },
+	    "volumes": [
+	      {
+	        "name": "cbz",
+	        "project": "string",
+	        "size": 1,
+	        "status": "available/in-use等",
+	        "create_by": "string",
+	        "availability_zone": "string",
+	        "attachements": "string",
+	        "host": "string",
+	        "created": "string"
+	      }
+	    ],
+	    "status": "MIGRATING",
+	    "availability_zone": "亦庄",
+	    "created": "2017/10/15 15:36"
+	  },
+	  {
+	    "ip": "10.1.21.2",
+	    "name": "string",
+	    "project": "ec2平台测试",
+	    "create_by": "bangzhongcao",
+	    "host": "l_1_14-10.18.0.14",
+	    "power_state": "RUNNING",
+	    "os_type": "CentOS-7.2-server_1116",
+	    "flavor": {
+	      "cpu": 0,
+	      "memory": 0,
+	      "root_disk": 0,
+	      "ephemeral_disk": 0
+	    },
+	    "volumes": [
+	      {
+	        "name": "cbz",
+	        "project": "string",
+	        "size": 1,
+	        "status": "available/in-use等",
+	        "create_by": "string",
+	        "availability_zone": "string",
+	        "attachements": "string",
+	        "host": "string",
+	        "created": "string"
+	      }
+	    ],
+	    "status": "MIGRATING",
+	    "availability_zone": "亦庄",
+	    "created": "2017/10/15 15:36"
+	  },
+	  {
+	    "ip": "10.1.21.2",
+	    "name": "string",
+	    "project": "ec2平台测试",
+	    "create_by": "bangzhongcao",
+	    "host": "l_1_14-10.18.0.14",
+	    "power_state": "RUNNING",
+	    "os_type": "CentOS-7.2-server_1116",
+	    "flavor": {
+	      "cpu": 0,
+	      "memory": 0,
+	      "root_disk": 0,
+	      "ephemeral_disk": 0
+	    },
+	    "volumes": [
+	      {
+	        "name": "cbz",
+	        "project": "string",
+	        "size": 1,
+	        "status": "available/in-use等",
+	        "create_by": "string",
+	        "availability_zone": "string",
+	        "attachements": "string",
+	        "host": "string",
+	        "created": "string"
+	      }
+	    ],
+	    "status": "MIGRATING",
+	    "availability_zone": "亦庄",
+	    "created": "2017/10/15 15:36"
+	  },
+	  {
+	    "ip": "10.1.21.2",
+	    "name": "string",
+	    "project": "ec2平台测试",
+	    "create_by": "bangzhongcao",
+	    "host": "l_1_14-10.18.0.14",
+	    "power_state": "RUNNING",
+	    "os_type": "CentOS-7.2-server_1116",
+	    "flavor": {
+	      "cpu": 0,
+	      "memory": 0,
+	      "root_disk": 0,
+	      "ephemeral_disk": 0
+	    },
+	    "volumes": [
+	      {
+	        "name": "cbz",
+	        "project": "string",
+	        "size": 1,
+	        "status": "available/in-use等",
+	        "create_by": "string",
+	        "availability_zone": "string",
+	        "attachements": "string",
+	        "host": "string",
+	        "created": "string"
+	      }
+	    ],
+	    "status": "MIGRATING",
+	    "availability_zone": "亦庄",
+	    "created": "2017/10/15 15:36"
+	  },
+	  {
+	    "ip": "10.1.21.2",
+	    "name": "string",
+	    "project": "ec2平台测试",
+	    "create_by": "bangzhongcao",
+	    "host": "l_1_14-10.18.0.14",
+	    "power_state": "RUNNING",
+	    "os_type": "CentOS-7.2-server_1116",
+	    "flavor": {
+	      "cpu": 0,
+	      "memory": 0,
+	      "root_disk": 0,
+	      "ephemeral_disk": 0
+	    },
+	    "volumes": [
+	      {
+	        "name": "cbz",
+	        "project": "string",
+	        "size": 1,
+	        "status": "available/in-use等",
+	        "create_by": "string",
+	        "availability_zone": "string",
+	        "attachements": "string",
+	        "host": "string",
+	        "created": "string"
+	      }
+	    ],
+	    "status": "MIGRATING",
+	    "availability_zone": "亦庄",
+	    "created": "2017/10/15 15:36"
+	  },
+	  {
+	    "ip": "10.1.21.2",
+	    "name": "string",
+	    "project": "ec2平台测试",
+	    "create_by": "bangzhongcao",
+	    "host": "l_1_14-10.18.0.14",
+	    "power_state": "RUNNING",
+	    "os_type": "CentOS-7.2-server_1116",
+	    "flavor": {
+	      "cpu": 0,
+	      "memory": 0,
+	      "root_disk": 0,
+	      "ephemeral_disk": 0
+	    },
+	    "volumes": [
+	      {
+	        "name": "cbz",
+	        "project": "string",
+	        "size": 1,
+	        "status": "available/in-use等",
+	        "create_by": "string",
+	        "availability_zone": "string",
+	        "attachements": "string",
+	        "host": "string",
+	        "created": "string"
+	      }
+	    ],
+	    "status": "MIGRATING",
+	    "availability_zone": "亦庄",
+	    "created": "2017/10/15 15:36"
+	  },
+	  {
+	    "ip": "10.1.21.2",
+	    "name": "string",
+	    "project": "ec2平台测试",
+	    "create_by": "bangzhongcao",
+	    "host": "l_1_14-10.18.0.14",
+	    "power_state": "RUNNING",
+	    "os_type": "CentOS-7.2-server_1116",
+	    "flavor": {
+	      "cpu": 0,
+	      "memory": 0,
+	      "root_disk": 0,
+	      "ephemeral_disk": 0
+	    },
+	    "volumes": [
+	      {
+	        "name": "cbz",
+	        "project": "string",
+	        "size": 1,
+	        "status": "available/in-use等",
+	        "create_by": "string",
+	        "availability_zone": "string",
+	        "attachements": "string",
+	        "host": "string",
+	        "created": "string"
+	      }
+	    ],
+	    "status": "MIGRATING",
+	    "availability_zone": "亦庄",
+	    "created": "2017/10/15 15:36"
+	  },
+	  {
+	    "ip": "10.1.21.2",
+	    "name": "string",
+	    "project": "ec2平台测试",
+	    "create_by": "bangzhongcao",
+	    "host": "l_1_14-10.18.0.14",
+	    "power_state": "RUNNING",
+	    "os_type": "CentOS-7.2-server_1116",
+	    "flavor": {
+	      "cpu": 0,
+	      "memory": 0,
+	      "root_disk": 0,
+	      "ephemeral_disk": 0
+	    },
+	    "volumes": [
+	      {
+	        "name": "cbz",
+	        "project": "string",
+	        "size": 1,
+	        "status": "available/in-use等",
+	        "create_by": "string",
+	        "availability_zone": "string",
+	        "attachements": "string",
+	        "host": "string",
+	        "created": "string"
+	      }
+	    ],
+	    "status": "MIGRATING",
+	    "availability_zone": "亦庄",
+	    "created": "2017/10/15 15:36"
+	  },
+	  {
+	    "ip": "10.1.21.2",
+	    "name": "string",
+	    "project": "ec2平台测试",
+	    "create_by": "bangzhongcao",
+	    "host": "l_1_14-10.18.0.14",
+	    "power_state": "RUNNING",
+	    "os_type": "CentOS-7.2-server_1116",
+	    "flavor": {
+	      "cpu": 0,
+	      "memory": 0,
+	      "root_disk": 0,
+	      "ephemeral_disk": 0
+	    },
+	    "volumes": [
+	      {
+	        "name": "cbz",
+	        "project": "string",
+	        "size": 1,
+	        "status": "available/in-use等",
+	        "create_by": "string",
+	        "availability_zone": "string",
+	        "attachements": "string",
+	        "host": "string",
+	        "created": "string"
+	      }
+	    ],
+	    "status": "MIGRATING",
+	    "availability_zone": "亦庄",
+	    "created": "2017/10/15 15:36"
+	  },
+	  {
+	    "ip": "10.1.21.2",
+	    "name": "string",
+	    "project": "ec2平台测试",
+	    "create_by": "bangzhongcao",
+	    "host": "l_1_14-10.18.0.14",
+	    "power_state": "RUNNING",
+	    "os_type": "CentOS-7.2-server_1116",
+	    "flavor": {
+	      "cpu": 0,
+	      "memory": 0,
+	      "root_disk": 0,
+	      "ephemeral_disk": 0
+	    },
+	    "volumes": [
+	      {
+	        "name": "cbz",
+	        "project": "string",
+	        "size": 1,
+	        "status": "available/in-use等",
+	        "create_by": "string",
+	        "availability_zone": "string",
+	        "attachements": "string",
+	        "host": "string",
+	        "created": "string"
+	      }
+	    ],
+	    "status": "MIGRATING",
+	    "availability_zone": "亦庄",
+	    "created": "2017/10/15 15:36"
+	  },
+	  {
+	    "ip": "10.1.21.2",
+	    "name": "string",
+	    "project": "ec2平台测试",
+	    "create_by": "bangzhongcao",
+	    "host": "l_1_14-10.18.0.14",
+	    "power_state": "RUNNING",
+	    "os_type": "CentOS-7.2-server_1116",
+	    "flavor": {
+	      "cpu": 0,
+	      "memory": 0,
+	      "root_disk": 0,
+	      "ephemeral_disk": 0
+	    },
+	    "volumes": [
+	      {
+	        "name": "cbz",
+	        "project": "string",
+	        "size": 1,
+	        "status": "available/in-use等",
+	        "create_by": "string",
+	        "availability_zone": "string",
+	        "attachements": "string",
+	        "host": "string",
+	        "created": "string"
+	      }
+	    ],
+	    "status": "MIGRATING",
+	    "availability_zone": "亦庄",
+	    "created": "2017/10/15 15:36"
+	  }
+	]
+}
