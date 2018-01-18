@@ -25,6 +25,7 @@ const networkData = require('../mock/network.json');
 const ipPoolData = require('../mock/ipPools.json');
 const pool_idData = require('../mock/ipPool_id.json');
 const ipAddrData = require('../mock/ipAddr.json');
+const rulesData = require('../mock/rules.json');
 
 const devWebpackConfig = merge(baseWebpackConfig, {
   module: {
@@ -84,6 +85,10 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       app.patch("/noec2/instances/1001",(req,res)=>{
         res.json({result:true});
       });
+      // 获取警告策略
+      app.get('/monitor/rules/',(req,res)=>{
+        res.json({result:true,data:rulesData});
+      })
     },
     clientLogLevel: 'warning',
     historyApiFallback: true,

@@ -38,7 +38,13 @@
 				<!-- @select='SelectItem' @select-all='selectAll'  -->
 				<el-table border :data="CurrentData" @sort-change='sortChange' @selection-change="selectChange" :default-sort = "{prop: 'name', order: 'descending'}">
 					<el-table-column type="selection" width='55'></el-table-column>
-					<el-table-column v-if='setColumn.name' key='name' prop="name" label="名称" sortable='custom'></el-table-column>
+					<el-table-column v-if='setColumn.name' key='name' prop="name" label="名称" sortable='custom'>
+						<template slot-scope='scope'>
+							<el-button type='text'><i class='el-icon-refresh' title='刷新'></i></el-button>
+							<span>{{scope.row.name}}</span>
+							
+						</template>
+					</el-table-column>
 					<el-table-column v-if='setColumn.first_ip' key='first_ip' prop="first_ip" label="IP" sortable='custom'></el-table-column>
 					<el-table-column v-if='setColumn.project' key='project' prop="project" label="项目" sortable='custom'></el-table-column>
 					<el-table-column v-if='setColumn.created_by' key='created_by' prop="created_by" label="创建者" sortable='custom'></el-table-column>

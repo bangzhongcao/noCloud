@@ -22,30 +22,16 @@
 			<!-- 表格 -->
 			<div class="table">
 				<!-- @select='SelectItem' @select-all='selectAll'  -->
-				<el-table border :data="CurrentData">
-					<el-table-column label="策略名称"></el-table-column>
-					<el-table-column label="产品类型"></el-table-column>
-					<el-table-column label="告警规则"></el-table-column>
-					<el-table-column label="关联实例"></el-table-column>
-
-					<el-table-column label="告警接收人"></el-table-column>
-					<el-table-column label="状态"></el-table-column>
-				<!-- 	<el-table-column v-if='setColumn.volumes' key='volumes'  label="存储卷">
-						<template slot-scope="scope">
-							<el-popover trigger="hover" placement="top">
-								<p>姓名: {{ scope.row.volumes }}</p>
-								<div slot="reference">
-									<el-tag size="medium" class='name-wrapper'>{{ scope.row.volumes }}</el-tag>
-								</div>
-							</el-popover>
+				<el-table border :data="CurrentData" @sort-change='sortChange' :default-sort = "{prop: 'name', order: 'descending'}">
+					<el-table-column label="策略名称" sortable='custom' prop='name'>
+						<template slot-scope='scope'>
+							<i class='el-icon-refresh c-p' title='刷新' style='margin-right:8px'></i>
+							<el-button type='text'>{{scope.row.name}}</el-button>
 						</template>
 					</el-table-column>
-					<el-table-column v-if='setColumn.created' key='created' label="创建时间" sortable='custom'>
-						<template slot-scope="scope">
-					        <i class="el-icon-time"></i>
-					        <span>{{ scope.row.created }}</span>
-				        </template>
-					</el-table-column> -->
+					<el-table-column label="父策略" prop='parent_name' sortable='custom'></el-table-column>
+					<el-table-column label="创建者" prop='create_user' sortable='custom'></el-table-column>
+					<el-table-column label="告警接收人" prop='uic' sortable='custom'></el-table-column>
 					<el-table-column label="操作" width='120' align='center'>
 						<template slot-scope="scope">
 							<el-button type="danger" plain size='small'>删除</el-button>
@@ -81,7 +67,10 @@
 			}
 		},
 		created(){
-			this.tableData = [{}]
+			this.$http.get('/monitor/rules/').then(res=>{
+				this.listData = res.body.data;
+				this.tableData = this.listData.slice(0);
+			});
 		},
 		computed:{
 			CurrentData(){
@@ -98,6 +87,81 @@
             }
 		},
 		methods:{
+			// 搜索功能
+            handleSearch(value){
+                var v = value.trim();
+                // var flag = this.isAccurate;
+                // 将页码重设为1
+                this.currentPage = 1;
+                this.tableData = this.listData.filter(function(item){
+                    for(var key in item){
+                        // 精确搜索
+                        // if(flag){
+                            if(String(item[key])===v){
+                                return item;
+                            } 
+                        // }else{//模糊搜索
+                        //     if(String(item[key]).indexOf(v)>=0){
+                        //         return item;
+                        //     }
+                        // }
+                    }
+                });
+                this.sortChange();
+            },
+            //当搜索框为空时自动返回所有数据
+            emptySearch(value){
+                if(!value){
+                    this.tableData = this.listData.slice(0);
+                    this.sortChange();
+                }
+            },
+            // 排序函数
+            compare(prop,order) {
+                return function (obj1, obj2) {
+                    var val1 = obj1[prop];
+                    var val2 = obj2[prop];
+                    if (!isNaN(Number(val1)) && !isNaN(Number(val2))) {
+                    	// 值为number型
+                        val1 = Number(val1);
+                        val2 = Number(val2);
+                    }else{
+                    	// 值为string型
+                    	val1 = obj1[prop].toLowerCase();
+                    	val2 = obj2[prop].toLowerCase();
+                    }
+                    if(order==='ascending'){
+                        if (val1 < val2) {
+                            return -1;
+                        } else if (val1 > val2) {
+                            return 1;
+                        } else {
+                            return 0;
+                        } 
+                    }else if(order==='descending'){
+                        if (val1 < val2) {
+                            return 1;
+                        } else if (val1 > val2) {
+                            return -1;
+                        } else {
+                            return 0;
+                        } 
+                    }
+                               
+                } 
+            },
+            // 排序
+	    	sortChange(obj){
+	    		// obj中的各个属性不为null时
+	    		if(obj.order&&obj.prop){
+	    			// 当关键字或排序顺序变化时才进行排序
+	    			if(this.key!==obj.prop||this.order!==obj.order){
+	    				this.key = obj.prop;
+                    	this.order = obj.order;
+                    	this.tableData.sort(this.compare(this.key,this.order));
+	    			}
+                }
+	    	},
 			// 翻页
             changePage(index){
                 this.currentPage = index;
@@ -110,7 +174,16 @@
                 window.scrollTo(0, 0);
             },
             // 刷新
-            refresh(){}
+            refresh(){
+            	this.$http.get('/monitor/rules/').then(res=>{
+            		this.searchValue = '';//清空搜索值
+                    this.currentPage = 1;//当前页码为1
+                    //重新获取数据
+					this.listData = res.body.data;
+					this.tableData = this.listData.slice(0);
+					this.sortChange();
+				})
+            }
 		}
 	};
 </script>

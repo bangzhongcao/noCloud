@@ -1,16 +1,16 @@
 <template>
 	<div class="slider p-f">
-		<router-link tag='a' to='home'>
-			<div class="logo ta-c p-r" :class="isCollapse?'logoCollapse':''">
+		<div class='p-r'>
+			<router-link tag='div' to='home' class="logo ta-c c-p" :class="isCollapse?'logoCollapse':''">
 				<!-- <i class='fa fa-cloud icon-logo va-m'></i> -->
 				<i class='fa fa-mixcloud icon-logo va-m'></i>
 				<span v-show='!isCollapse' class='text-logo va-m'>NO Cloud</span>
-				<div class="collapse-btn p-a c-p ta-c" @click='collapse'>
-					<i class='el-icon-d-arrow-left' v-show='!isCollapse'></i>
-					<i class='el-icon-d-arrow-right' v-show='isCollapse'></i>
-				</div>
+			</router-link>
+			<div class="collapse-btn p-a c-p ta-c" @click='collapse'>
+				<i class='el-icon-d-arrow-left' v-show='!isCollapse'></i>
+				<i class='el-icon-d-arrow-right' v-show='isCollapse'></i>
 			</div>
-		</router-link>
+		</div>
 		<el-menu class="el-menu-vertical-demo" :default-openeds='openArr' :default-active='$route.path' background-color="#242424" text-color="#fff" active-text-color="#ffd04b" @open="handleOpen" @close="handleClose" @select="handelSelect" :collapse="isCollapse" unique-opened router>
 			<el-menu-item index="/home"> 
 				<i class="fa fa-home fa-fw slider-font" style="font-size:18px"></i>
