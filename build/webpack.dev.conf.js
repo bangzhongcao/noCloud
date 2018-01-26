@@ -26,6 +26,8 @@ const ipPoolData = require('../mock/ipPools.json');
 const pool_idData = require('../mock/ipPool_id.json');
 const ipAddrData = require('../mock/ipAddr.json');
 const rulesData = require('../mock/rules.json');
+const metricData = require('../mock/metric.json');
+const hostGroupsData = require('../mock/hostGroups.json');
 
 const devWebpackConfig = merge(baseWebpackConfig, {
   module: {
@@ -88,7 +90,23 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       // 获取警告策略
       app.get('/monitor/rules/',(req,res)=>{
         res.json({result:true,data:rulesData});
-      })
+      });
+      // 获取监控项列表
+      app.get('/monitor/metrics/',(req,res)=>{
+        res.json({data:metricData});
+      });
+      // 获取机器组列表
+      app.get('/monitor/hostgroups/',(req,res)=>{
+        res.json({data:hostGroupsData});
+      });
+      // 新建机器组列表
+      app.post('/monitor/hostgroups/',(req,res)=>{
+        res.json({data:{
+          "id": 343,
+          "name": "test_group",
+          "created_by": "root"
+        }});
+      });
     },
     clientLogLevel: 'warning',
     historyApiFallback: true,

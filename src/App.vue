@@ -39,7 +39,8 @@ export default {
 <style socped lang='less'>
 	@import "~common/less/variable.less";
 	#app{
-		min-width: 1280px;
+		// min-width: 1280px;
+		min-width: 1200px;
 		box-sizing: border-box;
 		padding-top:75px; 
 		height: 100%;

@@ -296,14 +296,14 @@
                     }
                 });
                 // 重新排序
-                this.sortChange();
+                this.tableData.sort(this.compare(this.key,this.order));
             },
             //当搜索框为空时自动返回所有数据
             emptySearch(value){
                 if(!value){
                     this.tableData = this.listData.slice(0);
                     // 重新排序
-                    this.sortChange();
+                    this.tableData.sort(this.compare(this.key,this.order));
                 }
             },
 	    	// 排序函数
@@ -464,7 +464,7 @@
                     this.currentPage = 1;//当前页码为1
                     this.listData = res.body.data;//重新获取数据
                     this.tableData = this.listData.slice(0);//将其赋值给要展示的数组列表
-                    this.sortChange();//保留排序
+                    this.tableData.sort(this.compare(this.key,this.order));//保留排序
                 });
             },
             // 设置表格列
@@ -636,7 +636,8 @@
 					
 				}
 				.search{
-					width: 320px;
+					width: 20%;
+					max-width: 320px;
 					margin-right: 20px;
 					padding-right:56px;
 					input{

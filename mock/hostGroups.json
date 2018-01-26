@@ -1,0 +1,27 @@
+[
+  {
+    "id": 3,
+    "name": "docker-A",
+    "created_by": "user-A"
+  },
+  {
+    "id": 4,
+    "name": "hosts-A",
+    "created_by": "hosts-A"
+  },
+  {
+    "id": 3,
+    "name": "hosts-B",
+    "created_by": "hosts-B"
+  },
+  {
+    "id": 5,
+    "name": "docker-T",
+    "created_by": "user-B"
+  },
+  {
+    "id": 8,
+    "name": "docker-F",
+    "created_by": "root"
+  }
+]

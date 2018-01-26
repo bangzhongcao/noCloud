@@ -1,0 +1,6 @@
+[
+	{"name": "cpu利用率", "metric": "cpu.busy"}, 
+	{"name": "磁盘已使用量", "metric": "df.bytes.free"},
+	{"name": "运行进程个数", "metric": "agent.alive"},
+	{"name": "内存使用率", "metric": "memory.busy"}
+]

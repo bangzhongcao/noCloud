@@ -3,7 +3,7 @@
 		<div class="alarm-list" v-if='!isCreate'>
 			<div class="btn-group">
 				<!-- 操作按钮组 -->
-				<el-button type="primary" class='f-l' icon="fa fa-plus" plain>&nbsp;新建告警策略</el-button>
+				<el-button type="primary" class='f-l' icon="fa fa-plus" plain @click='createInstance'>&nbsp;新建告警规则</el-button>
 				<!-- 刷新、导出 -->
 				<div class="table-btn f-r">
 					<el-button icon="fa fa-refresh" title='刷新' @click='refresh'></el-button>
@@ -23,13 +23,13 @@
 			<div class="table">
 				<!-- @select='SelectItem' @select-all='selectAll'  -->
 				<el-table border :data="CurrentData" @sort-change='sortChange' :default-sort = "{prop: 'name', order: 'descending'}">
-					<el-table-column label="策略名称" sortable='custom' prop='name'>
+					<el-table-column label="规则名称" sortable='custom' prop='name'>
 						<template slot-scope='scope'>
 							<i class='el-icon-refresh c-p' title='刷新' style='margin-right:8px'></i>
 							<el-button type='text'>{{scope.row.name}}</el-button>
 						</template>
 					</el-table-column>
-					<el-table-column label="父策略" prop='parent_name' sortable='custom'></el-table-column>
+					<el-table-column label="父规则" prop='parent_name' sortable='custom'></el-table-column>
 					<el-table-column label="创建者" prop='create_user' sortable='custom'></el-table-column>
 					<el-table-column label="告警接收人" prop='uic' sortable='custom'></el-table-column>
 					<el-table-column label="操作" width='120' align='center'>
@@ -45,20 +45,24 @@
 			    </el-pagination>
 			</div>
 		</div>
-		<!-- <div class="createInstance" v-if='isCreate'>
-			<create-instance @cancel-create='CancleCreate'></create-instance>
-		</div> -->
+		<div class="createAlarm" v-if='isCreate'>
+			<create-alarm @cancel-create='CancleCreate' :alarmData="parentAlarmData"></create-alarm>
+		</div>
 	</div>
 </template>
 
 <script type="text/javascript">
+	import createAlarm from 'components/monitor/alarmStrategy/createAlarm';
+
 	export default {
+		components:{ createAlarm },
 		data(){
 			return{
-				isCreate:false,//是否创建虚拟机
+				isCreate:false,//是否创建告警策略
 		      	searchValue:'',//搜索值
 		      	listData:[],
 		        tableData: [],
+		        parentAlarmData:[],
 		        pageSize:25,//当前每页展示的条数
 	            currentPage:1,//当前在第几页
 	            opts:[25,100,200,10000],
@@ -70,6 +74,9 @@
 			this.$http.get('/monitor/rules/').then(res=>{
 				this.listData = res.body.data;
 				this.tableData = this.listData.slice(0);
+				// 初始化排序
+				this.tableData.sort(this.compare(this.key,this.order));
+				this.parentAlarmData = this.tableData.slice(0);
 			});
 		},
 		computed:{
@@ -107,13 +114,14 @@
                         // }
                     }
                 });
-                this.sortChange();
+                this.tableData.sort(this.compare(this.key,this.order));
             },
             //当搜索框为空时自动返回所有数据
             emptySearch(value){
                 if(!value){
                     this.tableData = this.listData.slice(0);
-                    this.sortChange();
+                    // 重新排序
+                    this.tableData.sort(this.compare(this.key,this.order));
                 }
             },
             // 排序函数
@@ -181,8 +189,16 @@
                     //重新获取数据
 					this.listData = res.body.data;
 					this.tableData = this.listData.slice(0);
-					this.sortChange();
+					this.tableData.sort(this.compare(this.key,this.order));//排序
 				})
+            },
+            // 点击创建弹出创建面板
+            createInstance(){
+            	this.isCreate = true;
+            },
+            // 返回列表面板
+            CancleCreate(flag){
+            	this.isCreate = flag;
             }
 		}
 	};
@@ -206,7 +222,7 @@
 					
 				}
 				.search{
-					width: 320px;
+					width: 300px;
 					margin-right: 20px;
 					padding-right:56px;
 					input{

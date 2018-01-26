@@ -135,7 +135,7 @@
 					
 				}
 				.search{
-					width: 320px;
+					width: 300px;
 					margin-right: 20px;
 					padding-right:56px;
 					input{

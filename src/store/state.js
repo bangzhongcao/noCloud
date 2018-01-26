@@ -1,5 +1,8 @@
 const state = {
-	// 虚拟机状态
+    // 屏幕大小
+    Size : 'small',
+    winWidth: 0,
+	 // 虚拟机状态
     Status:['RESIZE', 'REBUILD', 'BUILD', 'MIGRATING','VERIFY_RESIZE','ERROR','ACTIVE','SHUTOFF',
    'VERIFY_MIGRATING','VERIFY_NOVMMS_RESIZE', 'NOVMMS_RESIZE', 'NOVMMS_RESIZE_FAILED'],
    // 操作系统类型
@@ -63,7 +66,25 @@ const state = {
   				disabled:true
   			}]
   		}
-	]
+	 ],
+   //  statistic 统计方法
+    statistic:[
+      {
+        label:'平均值',
+        value:'avg'
+      },{
+        label:'最大值',
+        value:'max'
+      },{
+        label:'最小值',
+        value:'min'
+      },{
+        label:'求和值',
+        value:'sum'
+      }
+    ],
+    // 大小
+    operators:['==','!=','<','<=','>','>=']
 };
 
 export default state;

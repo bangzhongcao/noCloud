@@ -55,6 +55,14 @@
     		return window.keyPath;
     	}
     },
+    created(){
+    	this.$store.commit('changeSize');
+    },
+    mounted() {
+    	window.onresize = ()=>{
+    		this.$store.commit('changeSize');
+		}
+    },
     methods: {
       handleOpen(key, keyPath) {
         console.log(key, keyPath);

@@ -46,7 +46,7 @@
 				</div>
 			</div>
 			<div class="Settingform form f-l" v-show='isSetting'>
-				<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" :size="Size" label-position='left'>
+				<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" :size="$store.state.Size" label-position='left'>
 					<el-form-item label="机房" prop="availability_zone">
 						<el-radio-group v-model="ruleForm.availability_zone">
 							<el-radio-button label="亦庄"></el-radio-button>
@@ -116,7 +116,7 @@
 				</el-form>
 			</div>
 			<div class="Ipform form f-l" v-show='!isSetting'>
-				<el-form :model="IPForm" :rules="IPrules" ref="IPForm" label-width="80px" :size="Size" label-position='left'>
+				<el-form :model="IPForm" :rules="IPrules" ref="IPForm" label-width="80px" :size="$store.state.Size" label-position='left'>
 					<el-form-item label="网络" prop="netWork">
 						<el-select v-model="IPForm.netWork" class='long-item' @change="changeNetwork" placeholder="请选择网络">
 							<el-option v-for="item in networkList" :key="item.id" :label="item.name" :value="item.id">
@@ -148,7 +148,7 @@
 					    <template slot="title">
 					      高级选项<i class="header-icon el-icon-info"></i>
 					    </template>
-					    <el-form :model="allocForm" :rules="allocRules" ref="allocForm" label-width="100px" :size="Size" label-position='left'>
+					    <el-form :model="allocForm" :rules="allocRules" ref="allocForm" label-width="100px" :size="$store.state.Size" label-position='left'>
 						    <el-form-item label="IP分配方式">
 								<el-select v-model="allocForm.mode" class='long-item' placeholder="请选择IP池" @change='changeAllocType'>
 									<el-option v-for="(value,key) in allocMode" :key="key" :label="value" :value="key">
@@ -186,7 +186,6 @@
 	export default {
 		data() {
 		var validateIPtotal = (rule, value, callback) => {
-			// debugger
 			if (value > this.ipInfo.len) {
 				callback(new Error('可用IP数量小于创建虚拟机数量!（请修改创建虚拟机数量或更换IP池）'));
 			} else {
@@ -195,7 +194,7 @@
 		};
 	    return {
 	      	step:1,
-	      	Size:'small',//初始表单的size
+	      	// Size:'small',//初始表单的size
 	      	Chinesization:{
 	      		'availability_zone':'机房',
 	      		'vcpus':'CPU(核)',
@@ -326,8 +325,6 @@
 	    },
 
 	    created(){
-	    	// 初始化调整大小
-	    	this.changeSize();
 	    	// 获取用户信息列表
 	    	this.$http.get('/auth/users').then(res=>{
                 // this.owners = res.body.data;
@@ -341,11 +338,6 @@
                 });
             });
 	    },
-	    //监听窗口变化
-		mounted() {
-			// 监听window的resize事件
-			window.onresize = this.changeSize;
-		},
 	    methods: {
 	    	//进入下一步||创建虚拟机
 			submitForm(formName) {
@@ -516,28 +508,28 @@
 				});
 			},
 			// 更改浏览器窗口尺寸
-			changeSize() {
-				var winWidth=0;
-				// 获取窗口宽度
-				if (window.innerWidth){
-					winWidth = window.innerWidth;
-				}	
-				else if ((document.body) && (document.body.clientWidth)){
-					winWidth = document.body.clientWidth;
-				}
-				// 通过深入 Document 内部对 body 进行检测，获取窗口大小
-				else if (document.documentElement && document.documentElement.clientWidth){
-					winWidth = document.documentElement.clientWidth;
-				}
-				// 对窗口大小进行判断
-				if(winWidth>=1440){
-					this.Size = 'medium';
-				}else if(winWidth>=1320){
-					this.Size = 'small';
-				}else{
-					this.Size = 'mini';
-				}
-			},
+			// changeSize() {
+			// 	var winWidth=0;
+			// 	// 获取窗口宽度
+			// 	if (window.innerWidth){
+			// 		winWidth = window.innerWidth;
+			// 	}	
+			// 	else if ((document.body) && (document.body.clientWidth)){
+			// 		winWidth = document.body.clientWidth;
+			// 	}
+			// 	// 通过深入 Document 内部对 body 进行检测，获取窗口大小
+			// 	else if (document.documentElement && document.documentElement.clientWidth){
+			// 		winWidth = document.documentElement.clientWidth;
+			// 	}
+			// 	// 对窗口大小进行判断
+			// 	if(winWidth>=1440){
+			// 		this.Size = 'medium';
+			// 	}else if(winWidth>=1320){
+			// 		this.Size = 'small';
+			// 	}else{
+			// 		this.Size = 'mini';
+			// 	}
+			// },
 			// 改变操作系统
 			changeOS(v){
 				this.ruleForm.ephemeral_disk = v[0]+' 12GB';
@@ -662,9 +654,8 @@
 			}
 			.createInfo{
 				margin-top: 15px;
-				// top:15px;
-				// right:0;
-				width: 340px;
+				width: 25%;
+				max-width: 300px;
 				padding-left: 10px;
 				border-left: 1px dotted #ccc;
 				.title{
