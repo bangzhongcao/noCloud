@@ -1,12 +1,12 @@
 <template>
 	<div class="createAlarm">
 		<div class="createCont o-h">
-			<p>新建告警策略</p>
+			<p>新建告警规则</p>
 			<div class="Settingform">
 				<el-form :model="alarmForm" :rules="alarmRules" ref="alarmForm" label-width="100px" size="medium" label-position='left'>
 					<el-alert class='alarm-title' title="规则信息" type="info" :closable="false" show-icon></el-alert>
 					<el-form-item label="规则名称" prop='name'>
-						<el-input placeholder="请输入规则名称" v-model="alarmForm.name" class='input-width'></el-input>
+						<el-input placeholder="请输入规则名称" v-model.trim="alarmForm.name" class='input-width'></el-input>
 					</el-form-item>
 					<el-form-item label="父规则" prop="parent_id">
 						<el-select v-model="alarmForm.parent_id" filterable clearable :filter-method="parentFilter" placeholder="请输入父规则" class='long-item'>
@@ -65,10 +65,10 @@
 							<el-radio v-model="alarmObj" :label='!isAll'>自选实例</el-radio>
 						</el-form-item>
 						<div class="self-selected" v-if='!alarmObj'>
-							<el-form-item label='数据中心' v-if='hostGroups_list.length'>
-								<el-radio-group v-model="avail_zone" size="small">
-									<el-radio v-for='item in hostGroups_list' :key='item.name' :label="item.name" border></el-radio>
-								</el-radio-group>
+							<el-form-item label='实例组' v-if='hostGroups_list.length'>
+								<el-checkbox-group v-model="alarmForm.binds" size="small">
+									<el-checkbox v-for='item in hostGroups_list' :key='item.name' :label="item.id" border>{{item.name}}</el-checkbox>
+								</el-checkbox-group>
 							</el-form-item>
 							<el-collapse style='margin-top:20px'>
 					  			<el-collapse-item>
@@ -76,11 +76,17 @@
 								      新建实例组&nbsp;<i class="header-icon el-icon-info"></i>
 								    </template>
 									<el-form-item>
-										<create-hosts :instance-list='instList' @create-hosts='createhostGroups' @select-inst='changeInst' class='selected-inst'></create-hosts>
+										<create-hosts :instance-list='instList' @create-hosts='createhostGroups' class='selected-inst'></create-hosts>
 									</el-form-item>
 								</el-collapse-item>
 							</el-collapse>
 						</div>
+					</el-form-item>
+					<el-alert class='alarm-title' title="设置告警接收人" type="info" :closable="false" show-icon></el-alert>
+					<el-form-item label="告警接收人" prop="action">
+						<el-select v-model="alarmForm.action.uic" filterable multiple placeholder="请选择告警接收人" class='long-item'>
+							<el-option v-for="item in team_list" :key="item.id" :label="item.name" :value="item.name"></el-option>
+						</el-select>
 					</el-form-item>
 				</el-form>
 			</div>
@@ -116,6 +122,13 @@
 					callback();
 				}
 			};
+			var validateAction = (rule, obj, callback) => {
+				if(obj['uic'].length){
+					callback();
+				}else{
+					callback(new Error('告警接收人不能为空！'));
+				}
+			};
 		    return {
 		    	parentAlarms:[],//父规则列表
 		    	merticData:[],
@@ -123,8 +136,9 @@
 		    	MetricLength:[1],//添加监控项
 		    	isAll: true,
 		    	alarmObj: true,
-		    	avail_zone:'',
+		    	avail_zone:[],//选择的机器组列表
 		    	hostGroups_list:[],//机器组列表
+		    	team_list:[],//联系组列表
 		    	alarmForm:{
 		    		name:'',
 		    		parent_id:'',
@@ -136,6 +150,10 @@
 				    		right_value: 0
 		    			}
 		    		],
+		    		binds:[],
+		    		action:{
+		    			uic:[]
+		    		}
 		    	},
 		    	alarmRules:{
 		    		name:[
@@ -146,6 +164,9 @@
 		    		],
 		    		strategies:[
 		    			{ validator: validateStrategies, trigger: 'change'}
+		    		],
+		    		action:[
+		    			{ validator: validateAction, trigger: 'change' }
 		    		]
 		    	}
 		    };
@@ -160,20 +181,81 @@
 	    		this.$http.get('/monitor/hostgroups/').then(res=>{
 	    			this.hostGroups_list = res.body.data;
 	    			if(this.hostGroups_list.length){
-	    				this.avail_zone = this.hostGroups_list[0].grp_name;//机器组的默认值
+	    				this.$set(this.avail_zone,0,this.hostGroups_list[0].id);//机器组的默认值
 	    			}
+	    			// 获取所有的虚拟机列表
 	    			this.$http.get('/noec2/instances').then(res=>{
 	    				this.instList = res.body.data;
 	    			})
 	    		});
 	    	})
 	    },
+	    mounted(){
+	    	// 获取联系人组
+	    	this.$http.get('/monitor/teams/').then(res=>{
+	    		this.team_list = res.body.data;
+	    	})
+	    },
 	    methods: {
-	    	//进入下一步||创建虚拟机
+	    	//创建告警
 			submitForm(formName) {
 				this.$refs[formName].validate((valid) => {
 					if (valid) {
-						alert('success!');
+						var datas = {};
+						for(var key in this.alarmForm){
+							if(key==='binds'){
+								// 选中所有实例
+								if(this.alarmObj===true){
+									datas[key] = [0];
+								}else{
+									datas[key] = this.alarmForm[key];
+								}
+							}else {
+								datas[key] = this.alarmForm[key];
+							}
+						}
+						// 创建告警规则
+						const h = this.$createElement;
+				        this.$msgbox({
+				          title: '提示',
+				          message: h('p', null, [
+				            h('span', null, '即将创建告警规则 '),
+				            h('i', { style: 'color: teal' }, this.alarmForm.name)
+				          ]),
+				          showClose:false,
+				          showCancelButton: true,
+				          confirmButtonText: '确定',
+				          cancelButtonText: '取消',
+				          type: 'warning',
+				          beforeClose: (action, instance, done) => {
+				            if (action === 'confirm') {
+								instance.confirmButtonLoading = true;
+								instance.confirmButtonText = '执行中...';
+								this.$http.post('/monitor/rules',datas).then(res=>{
+									this.mess = '告警规则创建成功！';
+									this.messType = 'success';
+									// 停止loading状态
+									instance.confirmButtonLoading = false;
+									done();
+								});
+				            } else {
+				              	done();
+				            }
+				          }
+				        }).then(action => {
+				          this.$message({
+				            type: this.messType,
+				            message: this.mess,
+				            customClass:'pop-mess',
+				            center:true
+				          });
+				          this.$emit('cancel-create','success');
+				        }).catch(_=>{
+				        	this.$message({
+				        		type:'info',
+				        		message:'取消创建'
+				        	});
+				        });
 					} else {
 						console.log('error submit!!');
 						return false;
@@ -200,12 +282,7 @@
 				var obj = { metric:'',func:'avg',op:'==',right_value: 0 };
 				this.$set(this.alarmForm.strategies,length,obj);
 				this.MetricLength.push(1);
-				console.log(this.alarmForm.strategies);
 
-			},
-			// 选定机器实例
-			changeInst(arr){
-				console.log(arr);
 			},
 			// 创建机器组
 			createhostGroups(obj){

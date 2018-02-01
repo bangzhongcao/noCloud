@@ -1,6 +1,6 @@
 <template>
 	<div class="alarm">
-		<div class="alarm-list" v-if='!isCreate'>
+		<div class="alarm-list" v-if='!isHidden'>
 			<div class="btn-group">
 				<!-- 操作按钮组 -->
 				<el-button type="primary" class='f-l' icon="fa fa-plus" plain @click='createInstance'>&nbsp;新建告警规则</el-button>
@@ -26,7 +26,7 @@
 					<el-table-column label="规则名称" sortable='custom' prop='name'>
 						<template slot-scope='scope'>
 							<i class='el-icon-refresh c-p' title='刷新' style='margin-right:8px'></i>
-							<el-button type='text'>{{scope.row.name}}</el-button>
+							<el-button type='text' @click='alterAlarm(scope.row.id)'>{{scope.row.name}}</el-button>
 						</template>
 					</el-table-column>
 					<el-table-column label="父规则" prop='parent_name' sortable='custom'></el-table-column>
@@ -34,7 +34,7 @@
 					<el-table-column label="告警接收人" prop='uic' sortable='custom'></el-table-column>
 					<el-table-column label="操作" width='120' align='center'>
 						<template slot-scope="scope">
-							<el-button type="danger" plain size='small'>删除</el-button>
+							<el-button type="danger" plain size='small' @click='deleteRule(scope.row)'>删除</el-button>
 						</template>
 					</el-table-column>
 				</el-table>
@@ -45,24 +45,29 @@
 			    </el-pagination>
 			</div>
 		</div>
-		<div class="createAlarm" v-if='isCreate'>
-			<create-alarm @cancel-create='CancleCreate' :alarmData="parentAlarmData"></create-alarm>
+		<div v-if='isHidden'>
+			<create-alarm v-if='isCreate' @cancel-create='CancleCreate' :alarmData="parentAlarmData"></create-alarm>
+			<alter-alarm v-if='isAlter' @return-back='returnBack' :alarmInfoData='alarmInfo' :parentRuleData="parentAlarmData"></alter-alarm>
 		</div>
 	</div>
 </template>
 
 <script type="text/javascript">
 	import createAlarm from 'components/monitor/alarmStrategy/createAlarm';
+	import alterAlarm from 'components/monitor/alarmStrategy/alterAlarm';
 
 	export default {
-		components:{ createAlarm },
+		components:{ createAlarm ,alterAlarm },
 		data(){
 			return{
-				isCreate:false,//是否创建告警策略
+				isHidden:false,//隐藏列表面板
+				isCreate:false,//是否显示创建告警策略面板
+				isAlter:false,//是否显示修改告警策略面板
 		      	searchValue:'',//搜索值
 		      	listData:[],
 		        tableData: [],
-		        parentAlarmData:[],
+		        parentAlarmData:[],//父规则列表
+		        alarmInfo:{},//告警规则详情
 		        pageSize:25,//当前每页展示的条数
 	            currentPage:1,//当前在第几页
 	            opts:[25,100,200,10000],
@@ -190,15 +195,82 @@
 					this.listData = res.body.data;
 					this.tableData = this.listData.slice(0);
 					this.tableData.sort(this.compare(this.key,this.order));//排序
-				})
+				});
+            },
+            // 删除告警规则
+            deleteRule(obj){
+            	const h = this.$createElement;
+		        this.$msgbox({
+		            title: '提示',
+		            message: h('p', null, [
+		                h('span', null, '即将删除规则'),
+		                h('span', {style:'padding:0 8px;color: teal;word-wrap: break-word;overflow: hidden'}, obj.name),
+		                h('p', { style: "font-weight:700;font-size:15px;color:#F56C6C" }, '(告警规则删除后将无法找回！)')
+		            ]),
+		            showCancelButton: true,
+		            showClose:false,
+		            confirmButtonText: '确定',
+		            cancelButtonText: '取消',
+		            type: 'warning',
+		            beforeClose: (action, instance, done) => {
+	                 	if (action === 'confirm') {
+		              	instance.confirmButtonLoading = true;
+		                instance.confirmButtonText = '执行中...';
+		                //  '/monitor/rules/'+obj.id
+		            	this.$http.delete('/monitor/rules/1').then(res=>{
+		            		var index = this.tableData.indexOf(obj);
+		            		this.tableData.splice(index,1);
+		            		this.mess = '告警规则删除成功！';
+					        this.messType = 'success';
+					        // 停止loading状态
+					        instance.confirmButtonLoading = false;
+					        done();
+		            	});
+		            } else {
+		                done();
+		            }
+		          }
+		        }).then(action => {
+		          	this.$alert(this.mess, '提示', {
+		            	confirmButtonText: '确定',
+		            	type: this.messType,
+		            	showClose:false
+		            });
+		            this.$emit('cancel-create','success');//返回列表页面
+		        }).catch(_=>{
+		        	this.$message({
+		        		type:'info',
+		        		message:'取消删除'
+		        	});
+		        });
             },
             // 点击创建弹出创建面板
             createInstance(){
+            	this.isHidden = true;
             	this.isCreate = true;
+            },
+            // 点击弹出修改面板
+            alterAlarm(id){
+            	// this.$http.get('/monitor/rules/'+id).then(res=>{
+            	this.$http.get('/monitor/rules/10').then(res=>{
+            		this.alarmInfo = res.body.data;
+            		this.isHidden = true;
+            		this.isAlter = true;
+            	});
+            },
+            // 修改面板返回列表面板
+            returnBack(){
+            	this.isHidden = false;//返回列表页面
+				this.isAlter = false;
             },
             // 返回列表面板
             CancleCreate(flag){
-            	this.isCreate = flag;
+            	// 重新获取告警策略列表
+            	if(flag==='success'){
+            		this.refresh();
+            	}
+				this.isHidden = false;//返回列表页面
+				this.isCreate = false;
             }
 		}
 	};

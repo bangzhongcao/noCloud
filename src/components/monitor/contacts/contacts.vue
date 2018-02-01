@@ -23,29 +23,11 @@
 			<div class="table">
 				<!-- @select='SelectItem' @select-all='selectAll'  -->
 				<el-table border :data="CurrentData" style="width: 100%">
-					<el-table-column label="姓名"></el-table-column>
-					<el-table-column label="电话"></el-table-column>
-					<el-table-column label="邮箱"></el-table-column>
-					<el-table-column label="所属联系组"></el-table-column>
-					<el-table-column label="状态"></el-table-column>
-				<!-- 	<el-table-column v-if='setColumn.volumes' key='volumes'  label="存储卷">
+					<el-table-column label="联系人组名称"></el-table-column>
+					<el-table-column label="组成员"></el-table-column>
+					<el-table-column label="操作" width='200' align='center'>
 						<template slot-scope="scope">
-							<el-popover trigger="hover" placement="top">
-								<p>姓名: {{ scope.row.volumes }}</p>
-								<div slot="reference">
-									<el-tag size="medium" class='name-wrapper'>{{ scope.row.volumes }}</el-tag>
-								</div>
-							</el-popover>
-						</template>
-					</el-table-column>
-					<el-table-column v-if='setColumn.created' key='created' label="创建时间" sortable='custom'>
-						<template slot-scope="scope">
-					        <i class="el-icon-time"></i>
-					        <span>{{ scope.row.created }}</span>
-				        </template>
-					</el-table-column> -->
-					<el-table-column label="操作" width='160' align='center'>
-						<template slot-scope="scope">
+							<el-button type="primary" plain size='small'>编辑</el-button>
 							<el-button type="danger" plain size='small'>删除</el-button>
 						</template>
 					</el-table-column>
@@ -129,7 +111,6 @@
 						margin-left: 0;
 						padding:12px;
 					}
-					
 				}
 				.search{
 					width: 300px;

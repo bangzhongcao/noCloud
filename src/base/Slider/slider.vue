@@ -33,7 +33,7 @@
 					<i class="fa fa-dashboard fa-fw slider-font"></i>
 					<span slot="title">监控</span>
 				</template>
-				<el-menu-item index="/alarm">告警策略</el-menu-item>
+				<el-menu-item index="/alarm">告警规则</el-menu-item>
 				<el-menu-item index="/panel">自定义面板</el-menu-item>
 				<el-menu-item index="/instanceGroup">实例组管理</el-menu-item>
 				<el-menu-item index="/contacts">联系人管理</el-menu-item>

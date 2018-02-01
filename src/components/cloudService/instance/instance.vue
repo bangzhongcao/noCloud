@@ -124,7 +124,7 @@
 					</el-select>
 				</el-form-item>
 				<el-form-item label="云主机名称" prop='name'>
-					<el-input v-model="editForm.name" placeholder="请输入云主机名称" class='dialog-item'></el-input>
+					<el-input v-model.trim="editForm.name" placeholder="请输入云主机名称" class='dialog-item'></el-input>
 				</el-form-item>
 				<el-form-item label="联系人">
 					<el-select v-model="editForm.contact" filterable clearable :filter-method="ownerFilter" placeholder="请选择联系人" class='dialog-item'>
@@ -146,7 +146,7 @@
 		<el-dialog title="设置表格列" :visible.sync="isSettingColumn" :show-close='false' width="30%">
 			<div>
 				<el-row :gutter="10" style='margin-bottom:15px'>
-					<el-col :span="6"><el-checkbox @change='changeSel' v-model='temporaryList.name'>名称</el-checkbox></el-col>
+					<el-col :span="6"><el-checkbox v-model='temporaryList.name'>名称</el-checkbox></el-col>
 					<el-col :span="6"><el-checkbox v-model='temporaryList.first_ip'>IP</el-checkbox></el-col>
 					<el-col :span="6"><el-checkbox v-model='temporaryList.project'>项目</el-checkbox></el-col>
 					<el-col :span="6"><el-checkbox v-model='temporaryList.created_by'>创建者</el-checkbox></el-col>
@@ -491,17 +491,18 @@
             		this.$set(this.setColumn,key,this.temporaryList[key]);
             	}
             },
-            changeSel(v){
-            	console.log(v);
-            },
+            // 显示创建虚拟机面板
             createInstance(){
             	this.isCreate = true;
             },
             // 返回虚拟机列表面板
             CancleCreate(flag){
-            	this.isCreate = flag;
+            	if(flag==='success'){
+            		this.refresh();
+            	}
+            	this.isCreate = false;
             },
-            // 开机
+            // 虚拟机操作 开机/关机/重启/删除等
             operate(actions,selectArr){
             	// 设置不同的颜色
             	var instance_action = '';
@@ -552,7 +553,6 @@
 			                		// 进行ajax请求
 				                	this.$http.delete("/noec2/instances/1001").then(res=>{
 										var status = res.body.result;
-										console.log(res);
 								        this.mess = '所选择的虚拟机'+instance_action+'成功！';
 								        this.messType = 'success';
 								        // 停止loading状态
@@ -564,7 +564,6 @@
 			                		// 进行ajax请求
 				                	this.$http.post("/noec2/instances/1001",{ data:startData }).then(res=>{
 										var status = res.body.result;
-										console.log(res);
 								        this.mess = '所选择的虚拟机'+instance_action+'成功！';
 								        this.messType = 'success';
 								        // 停止loading状态

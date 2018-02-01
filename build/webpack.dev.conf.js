@@ -28,6 +28,9 @@ const ipAddrData = require('../mock/ipAddr.json');
 const rulesData = require('../mock/rules.json');
 const metricData = require('../mock/metric.json');
 const hostGroupsData = require('../mock/hostGroups.json');
+const teamsData = require('../mock/team.json');
+const ruleInfoData = require('../mock/ruleInfo.json');
+const certainHostsData = require('../mock/certain_hostGroup.json');
 
 const devWebpackConfig = merge(baseWebpackConfig, {
   module: {
@@ -106,6 +109,46 @@ const devWebpackConfig = merge(baseWebpackConfig, {
           "name": "test_group",
           "created_by": "root"
         }});
+      });
+      // 获取联系人组
+      app.get('/monitor/teams/',(req,res)=>{
+        res.json({data:teamsData});
+      });
+      // 新建告警策略
+      app.post('/monitor/rules',(req,res)=>{
+        res.json({status:true});
+      });
+      // 获取告警规则详细信息
+      app.get('/monitor/rules/10',(req,res)=>{
+        res.json({data:ruleInfoData});
+      });
+      // 修改告警规则信息
+      app.patch('/monitor/rules/1',(req,res)=>{
+        res.json({status:true});
+      });
+      // 修改告警策略
+      app.patch('/monitor/strategies/1',(req,res)=>{
+        res.json({status:true});
+      });
+      // 修改告警规则接收人
+      app.patch('/monitor/actions/1',(req,res)=>{
+        res.json({status:true});
+      });
+      // 修改告警规则接收人
+      app.get('/monitor/rule/11/hostgroup/',(req,res)=>{
+        res.json({data:certainHostsData});
+      });
+      // 修改告警对象
+      app.post('/monitor/rules/1',(req,res)=>{
+        res.json({status:true});
+      });
+      // 修改告警接收人
+      app.put('/monitor/actions/1',(req,res)=>{
+        res.json({status:true});
+      });
+      // 修改告警接收人
+      app.delete('/monitor/rules/1',(req,res)=>{
+        res.json({status:true});
       });
     },
     clientLogLevel: 'warning',

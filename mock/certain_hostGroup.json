@@ -1,0 +1,26 @@
+{
+  "hostgroups": [
+    {
+      "id": 2,
+      "name": "openstack",
+      "create_user": "xiqian"
+    },
+    {
+      "id": 3,
+      "name": "nodes",
+      "create_user": "xiqian"
+    },
+    {
+      "id": 5,
+      "name": "compute",
+      "create_user": "xiqian"
+    }
+  ],
+  "template": {
+    "id": 3,
+    "tpl_name": "openstack.nodes.compute",
+    "parent_id": 2,
+    "action_id": 3,
+    "create_user": "xiqian"
+  }
+}

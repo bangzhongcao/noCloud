@@ -57,6 +57,7 @@ export default new Router({
 			name:'alarm',
 			component:alarm,
 			beforeEnter: (to, from, next) => {
+				window.scrollTo(0,0);
 				window.keyPath = ["3", "/alarm"];
 	        	next();
 	      	}

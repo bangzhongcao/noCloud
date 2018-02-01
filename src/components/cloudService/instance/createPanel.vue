@@ -101,11 +101,11 @@
 						</el-select>
 					</el-form-item>
 					<el-form-item label="root密码" prop="adminPass">
-						<el-input v-model="ruleForm.adminPass" placeholder="请输入root密码" class='long-item'></el-input>
+						<el-input v-model.trim="ruleForm.adminPass" placeholder="请输入root密码" class='long-item'></el-input>
 						<el-button type="danger" @click='generatePass' plain>自动生成</el-button>
 					</el-form-item>
 					<el-form-item label="虚拟机名称">
-						<el-input placeholder="请输入虚拟机名称" v-model="ruleForm.name" style='width:200px'@change='changeName'></el-input>
+						<el-input placeholder="请输入虚拟机名称" v-model.trim="ruleForm.name" style='width:200px'@change='changeName'></el-input>
 					</el-form-item>
 					<el-form-item label="起始编号" v-if='ruleForm.name'>
 						<el-input-number v-model="ruleForm.name_suffix_begin" controls-position="right" :min='0'></el-input-number>
@@ -379,7 +379,6 @@
 									}
 								}
 							}
-							console.log(createData);
 
 							// 创建虚拟机
 							const h = this.$createElement;
@@ -422,7 +421,12 @@
 					            	type: this.messType,
 					            	showClose:false
 					            });
-					            this.cancel();//返回列表页面
+					            this.$emit('cancel-create','success');//返回列表页面
+					        }).catch(_=>{
+					        	this.$message({
+					        		type:'info',
+					        		message:'取消创建'
+					        	});
 					        });
 							// alert('submit!');
 						}else if(formName==='allocForm'){
@@ -491,6 +495,11 @@
 					            customClass:'pop-mess',
 					            center:true
 					          });
+					        }).catch(_=>{
+					        	this.$message({
+					        		type:'info',
+					        		message:'取消分配'
+					        	});
 					        });
 							
 							// this.$http.post("/noec2/ippools"+this.IPForm.ippool_id+"",{
@@ -507,29 +516,6 @@
 					}
 				});
 			},
-			// 更改浏览器窗口尺寸
-			// changeSize() {
-			// 	var winWidth=0;
-			// 	// 获取窗口宽度
-			// 	if (window.innerWidth){
-			// 		winWidth = window.innerWidth;
-			// 	}	
-			// 	else if ((document.body) && (document.body.clientWidth)){
-			// 		winWidth = document.body.clientWidth;
-			// 	}
-			// 	// 通过深入 Document 内部对 body 进行检测，获取窗口大小
-			// 	else if (document.documentElement && document.documentElement.clientWidth){
-			// 		winWidth = document.documentElement.clientWidth;
-			// 	}
-			// 	// 对窗口大小进行判断
-			// 	if(winWidth>=1440){
-			// 		this.Size = 'medium';
-			// 	}else if(winWidth>=1320){
-			// 		this.Size = 'small';
-			// 	}else{
-			// 		this.Size = 'mini';
-			// 	}
-			// },
 			// 改变操作系统
 			changeOS(v){
 				this.ruleForm.ephemeral_disk = v[0]+' 12GB';
