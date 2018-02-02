@@ -125,7 +125,7 @@
 					</div>
 					<el-form-item v-if='!isUicDis' label="告警接收人" prop="uic">
 						<el-select v-model="AlarmUicForm.uic" filterable multiple placeholder="请选择告警接收人" class='long-item'>
-							<el-option v-for="item in team_list" :key="item.id" :label="item.name" :value="item.name"></el-option>
+							<el-option v-for="item in team_list" :key="item.team.id" :label="item.team.name" :value="item.team.name"></el-option>
 						</el-select>
 					</el-form-item>
 					<el-form-item label-width="0px">

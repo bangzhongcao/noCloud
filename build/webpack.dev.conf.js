@@ -28,9 +28,10 @@ const ipAddrData = require('../mock/ipAddr.json');
 const rulesData = require('../mock/rules.json');
 const metricData = require('../mock/metric.json');
 const hostGroupsData = require('../mock/hostGroups.json');
-const teamsData = require('../mock/team.json');
 const ruleInfoData = require('../mock/ruleInfo.json');
 const certainHostsData = require('../mock/certain_hostGroup.json');
+const hostInfoData = require('../mock/hostgroupsInfo.json');
+const teamListData = require('../mock/teamList.json');
 
 const devWebpackConfig = merge(baseWebpackConfig, {
   module: {
@@ -110,10 +111,6 @@ const devWebpackConfig = merge(baseWebpackConfig, {
           "created_by": "root"
         }});
       });
-      // 获取联系人组
-      app.get('/monitor/teams/',(req,res)=>{
-        res.json({data:teamsData});
-      });
       // 新建告警策略
       app.post('/monitor/rules',(req,res)=>{
         res.json({status:true});
@@ -149,6 +146,36 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       // 修改告警接收人
       app.delete('/monitor/rules/1',(req,res)=>{
         res.json({status:true});
+      });
+      // 某一个实例组的详细信息
+      app.get('/monitor/hostgroups/1/',(req,res)=>{
+        res.json({data:hostInfoData});
+      });
+      // 创建实例组
+      app.post('/monitor/hostgroups/',(req,res)=>{
+        res.json({data:{
+          "id": 347,
+          "name": "bangzhong_group",
+          "created_by": "bangzhongcao"
+        }});
+      });
+      // 更新实例组
+      app.put('/monitor/hostgroups/1/',(req,res)=>{
+        res.json({data:{
+          "hostgroup": {
+            "id": 112,
+            "name": "xiang_test",
+            "create_user": "fengxiangzhang"
+          },
+          "hosts": [
+            "10.16.68.100",
+            "10.18.32.100"
+          ]
+        }});
+      });
+      // 联系人组
+      app.get('/monitor/teams/',(req,res)=>{
+        res.json({data:teamListData});
       });
     },
     clientLogLevel: 'warning',

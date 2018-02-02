@@ -85,7 +85,7 @@
 					<el-alert class='alarm-title' title="设置告警接收人" type="info" :closable="false" show-icon></el-alert>
 					<el-form-item label="告警接收人" prop="action">
 						<el-select v-model="alarmForm.action.uic" filterable multiple placeholder="请选择告警接收人" class='long-item'>
-							<el-option v-for="item in team_list" :key="item.id" :label="item.name" :value="item.name"></el-option>
+							<el-option v-for="item in team_list" :key="item.team.id" :label="item.team.name" :value="item.team.name"></el-option>
 						</el-select>
 					</el-form-item>
 				</el-form>

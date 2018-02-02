@@ -3,7 +3,7 @@
 		<div class="instancesGroup-list" v-if='!isCreate'>
 			<div class="btn-group">
 				<!-- 操作按钮组 -->
-				<el-button type="primary" class='f-l' icon="fa fa-plus" plain>&nbsp;新建实例组</el-button>
+				<el-button type="primary" class='f-l' icon="fa fa-plus" plain @click='createInstGroup'>&nbsp;新建实例组</el-button>
 				<!-- 刷新、导出 -->
 				<div class="table-btn f-r">
 					<el-button icon="fa fa-refresh" title='刷新' @click='refresh'></el-button>
@@ -23,26 +23,11 @@
 			<div class="table">
 				<!-- @select='SelectItem' @select-all='selectAll'  -->
 				<el-table border :data="CurrentData">
-					<el-table-column label="实例组名称"></el-table-column>
-					<el-table-column label="云主机"></el-table-column>
-				<!-- 	<el-table-column v-if='setColumn.volumes' key='volumes'  label="存储卷">
-						<template slot-scope="scope">
-							<el-popover trigger="hover" placement="top">
-								<p>姓名: {{ scope.row.volumes }}</p>
-								<div slot="reference">
-									<el-tag size="medium" class='name-wrapper'>{{ scope.row.volumes }}</el-tag>
-								</div>
-							</el-popover>
-						</template>
-					</el-table-column>
-					<el-table-column v-if='setColumn.created' key='created' label="创建时间" sortable='custom'>
-						<template slot-scope="scope">
-					        <i class="el-icon-time"></i>
-					        <span>{{ scope.row.created }}</span>
-				        </template>
-					</el-table-column> -->
+					<el-table-column label="实例组名称" prop='name' sortable='custom'></el-table-column>
+					<el-table-column label="云主机" prop='create_user' sortable='custom'></el-table-column>
 					<el-table-column label="操作" width='200' align='center'>
 						<template slot-scope="scope">
+							<el-button type="primary" plain size='small' @click='editGroup(scope.row.id)'>编辑</el-button>
 							<el-button type="danger" plain size='small'>删除</el-button>
 						</template>
 					</el-table-column>
@@ -54,17 +39,20 @@
 			    </el-pagination>
 			</div>
 		</div>
-		<!-- <div class="createInstance" v-if='isCreate'>
-			<create-instance @cancel-create='CancleCreate'></create-instance>
-		</div> -->
+		<div class="createInstance" v-if='isCreate'>
+			<createInstsPanel @cancel-create='CancleCreate' :is-alter='isAlter' :inst-list='instList' :hosts-info='hostgroupsInfo'></createInstsPanel>
+		</div>
 	</div>
 </template>
 
 <script type="text/javascript">
+	import createInstsPanel from './createInstsPanel.vue';
 	export default {
+		components:{createInstsPanel},
 		data(){
 			return{
-				isCreate:false,//是否创建虚拟机
+				isCreate:false,//创建/编辑
+				isAlter:false,//是否是编辑状态
 		      	searchValue:'',//搜索值
 		      	listData:[],
 		        tableData: [],
@@ -72,11 +60,22 @@
 	            currentPage:1,//当前在第几页
 	            opts:[25,100,200,10000],
 	            key:'name',//排序的关键字
-	            order:'ascending'//默认的排序的升降序
+	            order:'ascending',//默认的排序的升降序
+	            instList:[],//所有云主机列表
+	            hostgroupsInfo:{}//某一个实例组的详细信息
 			}
 		},
 		created(){
-			this.tableData = [{}]
+			this.$http.get('/monitor/hostgroups/').then(res=>{
+				this.listData = res.body.data;
+	    		this.tableData = this.listData.slice(0);
+	    		// 初始化排序
+				this.tableData.sort(this.compare(this.key,this.order));
+				// 获取所有的虚拟机列表
+				this.$http.get('/noec2/instances').then(res=>{
+					this.instList = res.body.data;
+				});
+	    	});
 		},
 		computed:{
 			CurrentData(){
@@ -93,6 +92,82 @@
             }
 		},
 		methods:{
+			// 搜索功能
+            handleSearch(value){
+                var v = value.trim();
+                // var flag = this.isAccurate;
+                // 将页码重设为1
+                this.currentPage = 1;
+                this.tableData = this.listData.filter(function(item){
+                    for(var key in item){
+                        // 精确搜索
+                        // if(flag){
+                            if(String(item[key])===v){
+                                return item;
+                            } 
+                        // }else{//模糊搜索
+                        //     if(String(item[key]).indexOf(v)>=0){
+                        //         return item;
+                        //     }
+                        // }
+                    }
+                });
+                this.tableData.sort(this.compare(this.key,this.order));
+            },
+            //当搜索框为空时自动返回所有数据
+            emptySearch(value){
+                if(!value){
+                    this.tableData = this.listData.slice(0);
+                    // 重新排序
+                    this.tableData.sort(this.compare(this.key,this.order));
+                }
+            },
+            // 排序函数
+            compare(prop,order) {
+                return function (obj1, obj2) {
+                    var val1 = obj1[prop];
+                    var val2 = obj2[prop];
+                    if (!isNaN(Number(val1)) && !isNaN(Number(val2))) {
+                    	// 值为number型
+                        val1 = Number(val1);
+                        val2 = Number(val2);
+                    }else{
+                    	// 值为string型
+                    	val1 = obj1[prop].toLowerCase();
+                    	val2 = obj2[prop].toLowerCase();
+                    }
+                    if(order==='ascending'){
+                        if (val1 < val2) {
+                            return -1;
+                        } else if (val1 > val2) {
+                            return 1;
+                        } else {
+                            return 0;
+                        } 
+                    }else if(order==='descending'){
+                        if (val1 < val2) {
+                            return 1;
+                        } else if (val1 > val2) {
+                            return -1;
+                        } else {
+                            return 0;
+                        } 
+                    }
+                               
+                } 
+            },
+            // 排序
+	    	sortChange(obj){
+	    		// obj中的各个属性不为null时
+	    		if(obj.order&&obj.prop){
+	    			// 当关键字或排序顺序变化时才进行排序
+	    			if(this.key!==obj.prop||this.order!==obj.order){
+	    				this.key = obj.prop;
+                    	this.order = obj.order;
+                    	this.tableData.sort(this.compare(this.key,this.order));
+	    			}
+                }
+	    	},
 			// 翻页
             changePage(index){
                 this.currentPage = index;
@@ -105,7 +180,40 @@
                 window.scrollTo(0, 0);
             },
             // 刷新
-            refresh(){}
+            refresh(){
+            	this.$http.get('/monitor/hostgroups/').then(res=>{
+            		this.searchValue = '';//清空搜索值
+                    this.currentPage = 1;//当前页码为1
+                    //重新获取数据
+					this.listData = res.body.data;
+					this.tableData = this.listData.slice(0);
+					this.tableData.sort(this.compare(this.key,this.order));//排序
+				});
+            },
+            //弹出创建面板
+            createInstGroup(){
+            	this.hostgroupsInfo = {"title":'创建实例组'};
+            	this.isCreate = true;
+            	this.isAlter = false;
+            },
+            // 编辑弹窗
+            editGroup(id){
+            	// '/monitor/hostgroups/'+id+'/'
+            	this.$http.get('/monitor/hostgroups/1/').then(res=>{
+            		this.hostgroupsInfo = res.body.data;
+            		this.hostgroupsInfo.title = '修改实例组';
+            		this.isCreate = true;
+            		this.isAlter = true;
+            	});
+            },
+            //关闭弹窗
+            CancleCreate(v){
+            	if(v){
+            		debugger
+            		this.refresh();
+            	}
+            	this.isCreate = false;
+            }
 		}
 	};
 </script>
