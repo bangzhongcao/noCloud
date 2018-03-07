@@ -6,7 +6,12 @@
       "resume": "开发人员组",
       "creator": 1
     },
-    "creator_name": "xiqian",
+    "creator": {
+      "id": 11,
+      "name": "钱熙",
+      "department": "网络运营部",
+      "email": "xiqian@sohu-inc.com"
+    },
     "users": [
       {
         "id": 1,
@@ -53,7 +58,12 @@
       "resume": "开发人员组",
       "creator": 1
     },
-    "creator_name": "xiqian",
+    "creator": {
+      "id": 11,
+      "name": "钱熙",
+      "department": "网络运营部",
+      "email": "xiqian@sohu-inc.com"
+    },
     "users": [
       {
         "id": 1,
@@ -91,7 +101,12 @@
       "resume": "开发人员组",
       "creator": 1
     },
-    "creator_name": "xiqian",
+    "creator": {
+      "id": 11,
+      "name": "钱熙",
+      "department": "网络运营部",
+      "email": "xiqian@sohu-inc.com"
+    },
     "users": [
       {
         "id": 1,
@@ -129,7 +144,12 @@
       "resume": "开发人员组",
       "creator": 1
     },
-    "creator_name": "xiqian",
+    "creator": {
+      "id": 11,
+      "name": "钱熙",
+      "department": "网络运营部",
+      "email": "xiqian@sohu-inc.com"
+    },
     "users": [
       {
         "id": 1,

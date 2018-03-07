@@ -3,7 +3,7 @@
 		<div class="contacts-list" v-if='!isCreate'>
 			<div class="btn-group">
 				<!-- 操作按钮组 -->
-				<el-button type="primary" class='f-l' icon="fa fa-plus" plain>&nbsp;新建联系人</el-button>
+				<el-button type="primary" class='f-l' icon="fa fa-plus" @click='createContacts' plain>&nbsp;新建联系人</el-button>
 				<!-- 刷新、导出 -->
 				<div class="table-btn f-r">
 					<el-button icon="fa fa-refresh" title='刷新' @click='refresh'></el-button>
@@ -23,16 +23,17 @@
 			<div class="table">
 				<!-- @select='SelectItem' @select-all='selectAll'  -->
 				<el-table border :data="CurrentData" style="width: 100%">
-					<el-table-column label="联系人组名称" prop='team.name' sortable='custom'></el-table-column>
-					<el-table-column label="组成员" prop='users' :formatter="formatter">
-						<!-- <template slot-scope='scope'>
-							<p>{{scope.row.name}}</p>
-						</template> -->
+					<el-table-column label="联系人组名称" width='200' prop='team.name' sortable='custom'></el-table-column>
+					<el-table-column label="组成员">
+						<template slot-scope="scope">
+							<el-tag class='member-tag' v-for='item in scope.row.users' type='primary' close-transition>{{item.name}}--{{item.email}}</el-tag>
+			        	</template>
 					</el-table-column>
+					<el-table-column label="创建者" width='150' prop='creator.name' sortable='custom'></el-table-column>
 					<el-table-column label="操作" width='200' align='center'>
 						<template slot-scope="scope">
-							<el-button type="primary" plain size='small'>编辑</el-button>
-							<el-button type="danger" plain size='small'>删除</el-button>
+							<el-button type="primary" plain size='small' @click='editContacts(scope.row.team.id)'>编辑</el-button>
+							<el-button type="danger" plain size='small' @click='deleteContacts(scope.row)'>删除</el-button>
 						</template>
 					</el-table-column>
 				</el-table>
@@ -43,35 +44,51 @@
 			    </el-pagination>
 			</div>
 		</div>
-		<!-- <div class="createInstance" v-if='isCreate'>
-			<create-instance @cancel-create='CancleCreate'></create-instance>
-		</div> -->
+		<div class="contactPanel" v-if='isCreate'>
+			<contact-panel @cancel-pop='CanclePop' :is-alter='isAlter' :user-list='ownerlist' :contact-info='contactsInfo' :Title='popTitle'></contact-panel>
+		</div>
 	</div>
 </template>
 
 <script type="text/javascript">
+	import contactPanel from './operateContact.vue';
 	export default {
+		components:{contactPanel},
 		data(){
 			return{
-				isCreate:false,//是否创建虚拟机
+				isCreate:false,//创建
+				isAlter:false,//是否是编辑状态
 		      	searchValue:'',//搜索值
 		      	listData:[],
 		        tableData: [],
 		        pageSize:25,//当前每页展示的条数
 	            currentPage:1,//当前在第几页
 	            opts:[25,100,200,10000],
+	            ownerlist:[],//联系人列表
+	            contactsInfo:[],//联系人组详情列表
+	            popTitle:'',
 	            key:'name',//排序的关键字
 	            order:'ascending'//默认的排序的升降序
 			}
 		},
 		created(){
+			// 获取联系人组列表
 			this.$http.get('/monitor/teams/').then(res=>{
 				this.listData = res.body.data;
 	    		this.tableData = this.listData.slice(0);
 	    		// 初始化排序
 				this.tableData.sort(this.compare(this.key,this.order));
-				console.log(this.tableData);
 			});
+			// 获取联系人列表
+	    	this.$http.get('/auth/users').then(res=>{
+                res.body.data.forEach((item,i)=>{
+                	this.ownerlist.push({
+                		'label':item.label,
+                		'email':item.email,
+                		'value':item.id
+                	});
+                });
+            });
 		},
 		computed:{
 			CurrentData(){
@@ -177,18 +194,98 @@
             },
             // 刷新
             refresh(){
-            	this.$http.get('/monitor/teams/').then(res=>{
-            		this.searchValue = '';//清空搜索值
+            	// 获取联系人组列表
+				this.$http.get('/monitor/teams/').then(res=>{
+					this.listData = [];
+					this.searchValue = '';//清空搜索值
                     this.currentPage = 1;//当前页码为1
                     //重新获取数据
 					this.listData = res.body.data;
-					this.tableData = this.listData.slice(0);
-					this.tableData.sort(this.compare(this.key,this.order));//排序
+		    		// 初始化排序
+					this.tableData.sort(this.compare(this.key,this.order));
 				});
             },
-            // 格式处理
-            formatter(row,colome){
-            	return row.name;
+            //弹出创建面板
+            createContacts(){
+            	this.popTitle = '创建联系人组';
+            	this.isCreate = true;
+            	this.isAlter = false;
+            },
+            // 编辑弹窗
+            editContacts(id){
+            	//  '/monitor/teams/{team_id}/''
+            	this.$http.get('/monitor/teams/1/').then(res=>{
+            		var obj = res.body.data;
+            		var arrId = [];
+            		obj.users.forEach((item,i)=>{
+            			arrId.push(item.id);
+            		})
+            		this.contactsInfo.push({
+        				"creator":obj.creator.name,
+        				"id":obj.id,
+        				"name":obj.name,
+        				"resume":obj.resume,
+        				"users":arrId
+        			});
+            		this.popTitle = '修改联系人组';
+            		this.isCreate = true;
+            		this.isAlter = true;
+            	});
+            },
+            // 删除联系人组
+            deleteContacts(obj){
+            	const h = this.$createElement;
+		        this.$msgbox({
+		            title: '提示',
+		            message: h('p', null, [
+		                h('span', null, '即将删除联系人组'),
+		                h('span', {style:'padding:0 8px;color: teal;word-wrap: break-word;overflow: hidden'}, obj.team.name),
+		                h('p', { style: "font-weight:700;font-size:15px;color:#F56C6C" }, '(联系人组删除后将无法找回！)')
+		            ]),
+		            showCancelButton: true,
+		            showClose:false,
+		            confirmButtonText: '确定',
+		            cancelButtonText: '取消',
+		            type: 'warning',
+		            beforeClose: (action, instance, done) => {
+	                 	if (action === 'confirm') {
+		              	instance.confirmButtonLoading = true;
+		                instance.confirmButtonText = '执行中...';
+		                //  '/monitor/teams/'+obj.id
+		            	this.$http.delete('/monitor/teams/1').then(res=>{
+		            		var index = this.tableData.indexOf(obj);
+		            		this.tableData.splice(index,1);
+		            		this.mess = '联系人组删除成功！';
+					        this.messType = 'success';
+					        // 停止loading状态
+					        instance.confirmButtonLoading = false;
+					        done();
+		            	});
+		            } else {
+		                done();
+		            }
+		          }
+		        }).then(action => {
+		          	this.$alert(this.mess, '提示', {
+		            	confirmButtonText: '确定',
+		            	type: this.messType,
+		            	showClose:false
+		            });
+		            this.$emit('cancel-create','success');//返回列表页面
+		        }).catch(_=>{
+		        	this.$message({
+		        		type:'info',
+		        		message:'取消删除'
+		        	});
+		        });
+            },
+            //关闭弹窗
+            CanclePop(v){
+            	if(v){
+            		this.refresh();
+            	}
+            	this.contactsInfo = [];
+            	this.isCreate = false;
             }
 		}
 	};
@@ -235,13 +332,8 @@
 				}
 			}
 			.table{
-				.name-wrapper{
-					width:100%; 
-					line-height: 20px;
-					word-wrap: nowrap;
-					overflow: hidden;
-					text-overflow: ellipsis;
-					height:auto
+				.member-tag{
+					margin: 5px 10px;
 				}
 			}
 			.pagination{

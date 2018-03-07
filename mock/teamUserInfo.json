@@ -1,0 +1,40 @@
+{
+	"creator": {
+	    "id": 11,
+	    "name": "钱熙",
+	    "department": "网络运营部",
+	    "email": "xiqian@sohu-inc.com"
+	},
+	"id":11,
+	"name":"测试人员",
+  "resume": "对该组的简要描述",
+  "users": [
+    {
+      "id": 1,
+      "name": "钱熙",
+      "email": "xiqian@sohu-inc.com",
+      "phone": "",
+      "im": "",
+      "qq": "",
+      "role": 0
+    },
+    {
+      "id": 2,
+      "name": "冯启东",
+      "email": "qidongfeng@sohu-inc.com",
+      "phone": "",
+      "im": "",
+      "qq": "",
+      "role": 0
+    },
+    {
+      "id": 3,
+      "name": "曹邦中",
+      "email": "bangzhongcao@sohu-inc.com",
+      "phone": "",
+      "im": "",
+      "qq": "",
+      "role": 0
+    }
+  ]
+}

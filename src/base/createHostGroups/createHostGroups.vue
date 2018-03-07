@@ -7,7 +7,7 @@
 				<el-button v-if='isAlter' type="success" plain round class='createHostsBtn' @click="createHosts('HostGroupsForm')">修改实例组</el-button>
 			</el-form-item>
 			<el-form-item class='transfer'>
-				<el-transfer filterable filter-placeholder="请输入实例名或IP" v-model="instances" :titles="['全部实例列表', '已选实例列表']" :data="list">
+				<el-transfer filterable filter-placeholder="请输入实例名或IP" v-model="instances" :titles="['未选实例列表', '已选实例列表']" :data="list">
     			</el-transfer>
 			</el-form-item>
 		</el-form>

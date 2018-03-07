@@ -24,11 +24,10 @@
 				<!-- @select='SelectItem' @select-all='selectAll'  -->
 				<el-table border :data="CurrentData">
 					<el-table-column label="实例组名称" prop='name' sortable='custom'></el-table-column>
-					<el-table-column label="云主机" prop='create_user' sortable='custom'></el-table-column>
-					<el-table-column label="操作" width='200' align='center'>
+					<el-table-column label="操作" width='300' align='center'>
 						<template slot-scope="scope">
 							<el-button type="primary" plain size='small' @click='editGroup(scope.row.id)'>编辑</el-button>
-							<el-button type="danger" plain size='small'>删除</el-button>
+							<el-button type="danger" plain size='small' @click='deleteGroup(scope.row)'>删除</el-button>
 						</template>
 					</el-table-column>
 				</el-table>
@@ -206,10 +205,56 @@
             		this.isAlter = true;
             	});
             },
+            // 删除联系人组
+            deleteGroup(obj){
+            	const h = this.$createElement;
+		        this.$msgbox({
+		            title: '提示',
+		            message: h('p', null, [
+		                h('span', null, '即将删除实例组'),
+		                h('span', {style:'padding:0 8px;color: teal;word-wrap: break-word;overflow: hidden'}, obj.name),
+		                h('p', { style: "font-weight:700;font-size:15px;color:#F56C6C" }, '(实例组删除后将无法找回！)')
+		            ]),
+		            showCancelButton: true,
+		            showClose:false,
+		            confirmButtonText: '确定',
+		            cancelButtonText: '取消',
+		            type: 'warning',
+		            beforeClose: (action, instance, done) => {
+	                 	if (action === 'confirm') {
+		              	instance.confirmButtonLoading = true;
+		                instance.confirmButtonText = '执行中...';
+		                //  '/monitor/hostgroups/'+obj.id
+		            	this.$http.delete('/monitor/hostgroups/1').then(res=>{
+		            		var index = this.tableData.indexOf(obj);
+		            		this.tableData.splice(index,1);
+		            		this.mess = '实例组删除成功！';
+					        this.messType = 'success';
+					        // 停止loading状态
+					        instance.confirmButtonLoading = false;
+					        done();
+		            	});
+		            } else {
+		                done();
+		            }
+		          }
+		        }).then(action => {
+		          	this.$alert(this.mess, '提示', {
+		            	confirmButtonText: '确定',
+		            	type: this.messType,
+		            	showClose:false
+		            });
+		            this.$emit('cancel-create','success');//返回列表页面
+		        }).catch(_=>{
+		        	this.$message({
+		        		type:'info',
+		        		message:'取消删除'
+		        	});
+		        });
+            },
             //关闭弹窗
             CancleCreate(v){
             	if(v){
-            		debugger
             		this.refresh();
             	}
             	this.isCreate = false;

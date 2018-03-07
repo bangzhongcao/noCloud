@@ -32,6 +32,7 @@ const ruleInfoData = require('../mock/ruleInfo.json');
 const certainHostsData = require('../mock/certain_hostGroup.json');
 const hostInfoData = require('../mock/hostgroupsInfo.json');
 const teamListData = require('../mock/teamList.json');
+const teamUsersData = require('../mock/teamUserInfo.json');
 
 const devWebpackConfig = merge(baseWebpackConfig, {
   module: {
@@ -173,9 +174,29 @@ const devWebpackConfig = merge(baseWebpackConfig, {
           ]
         }});
       });
+      // 删除实例组
+      app.delete('/monitor/hostgroups/1/',(req,res)=>{
+        res.json({status:true});
+      });
       // 联系人组
       app.get('/monitor/teams/',(req,res)=>{
         res.json({data:teamListData});
+      });
+      // 联系人组详情
+      app.get('/monitor/teams/1/',(req,res)=>{
+        res.json({data:teamUsersData});
+      });
+      // 创建联系人组
+      app.post('/monitor/teams/',(req,res)=>{
+        res.json({status:true});
+      });
+      // 创建联系人组
+      app.put('/monitor/teams/1/',(req,res)=>{
+        res.json({status:true});
+      });
+      // 删除联系人组
+      app.delete('/monitor/teams/1/',(req,res)=>{
+        res.json({status:true});
       });
     },
     clientLogLevel: 'warning',

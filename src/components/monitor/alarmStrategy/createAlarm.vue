@@ -304,8 +304,10 @@
 			.Settingform{
 				// width: 70%;
 				padding-top: 25px;
+				padding-left: 30px;
 				.alarm-title{
-					margin-bottom:20px
+					margin-bottom:20px;
+					margin-left:-30px;
 				}
 				.customtables{
 					.border-r{

@@ -1,42 +1,42 @@
 [
 	{
 		"label":"曹邦中",
-		"id":"cbz",
+		"id":3,
 		"email":"bangzhongcao@sohu-inc.com"
 	},
 	{
 		"label":"张丰祥",
-		"id":"zfx",
+		"id":5,
 		"email":"fengxiangzhang@sohu-inc.com"
 	},
 	{
 		"label":"刘晓",
-		"id":"lx",
+		"id":4,
 		"email":"xiaoliu0826@sohu-inc.com"
 	},
 	{
 		"label":"钱夕",
-		"id":"qx",
+		"id":1,
 		"email":"xiqian@sohu-inc.com"
 	},
 	{
 		"label":"田兆楠",
-		"id":"tzn",
+		"id":6,
 		"email":"zhaonantian@sohu-inc.com"
 	},
 	{
 		"label":"冯启东",
-		"id":"fqd",
+		"id":2,
 		"email":"qidongfeng@sohu-inc.com"
 	},
 	{
 		"label":"张伦",
-		"id":"zl",
+		"id":7,
 		"email":"lunzhang1124@sohu-inc.com"
 	},
 	{
 		"label":"代庆娥",
-		"id":"dqe",
+		"id":8,
 		"email":"qingedai@sohu-inc.com"
 	}
 ]
