@@ -1,4 +1,9 @@
 const state = {
+    //列表内容
+    listData:[],
+    tableData: [], 
+    key:'name',//排序的关键字
+    order:'ascending',//默认的排序的升降序
     // 屏幕大小
     Size : 'small',
     winWidth: 0,

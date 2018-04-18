@@ -50,7 +50,7 @@ export default {
 			min-height: 100%;
 			border-bottom: 15px solid @colorBackground;
 			margin-right: 15px;
-			margin-left: 255px;
+			margin-left: 245px;
 			background-color: @whiteBackground; 
 		}
 		.collapsePanel{

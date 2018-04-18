@@ -90,19 +90,19 @@
 		top:0px;
 		z-index: 2001;
 		.collapse-btn{
-			width: 40px;
-			height: 40px;
-			line-height: 40px;
-			top:10px;
-			right:-40px;
-			background-color: @shrinkBtnColor;
-			color: @colorText;
-			font-size: 20px;
+			width: 50px;
+			height: 60px;
+			line-height: 60px;
+			top:0;
+			right:-50px;
+			background-color: #404040;
+			color: #d0d0d0;
+			font-size: 24px;
 			font-weight: 700;
 		}
 		.el-menu-vertical-demo {
 		  	&:not(.el-menu--collapse){
-		  		width: 240px;
+		  		width: 230px;
 		  	}
 		  	width:64px;
 		    height: 100%;
@@ -112,7 +112,7 @@
 		    }
 	  	}
 		.logo{
-			width: 240px;
+			width: 230px;
 			height: 59px;
 			line-height: 59px;
 			background-color: @logoColor;

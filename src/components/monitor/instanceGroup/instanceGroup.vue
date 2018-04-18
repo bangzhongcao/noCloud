@@ -10,8 +10,8 @@
 				</div>
 				<!-- 搜索 -->
 				<div class='search f-r p-r'>
-					<input type="text" v-model="searchValue" @keyup.enter='handleSearch(searchValue)' @input='emptySearch(searchValue)' placeholder="请输入内容">
-					<el-button slot="append" icon="el-icon-search" @click='handleSearch(searchValue)' class='search-btn p-a' ></el-button>
+					<input type="text" v-model="searchValue" @keyup.enter="$store.commit('handleSearch',searchValue)" @input="$store.commit('emptySearch',searchValue)" placeholder="请输入内容">
+					<el-button slot="append" icon="el-icon-search" @click="$store.commit('handleSearch',searchValue)" class='search-btn p-a' ></el-button>
 				</div>
 			</div>
 			<!-- 分页 -->
@@ -22,7 +22,7 @@
 			<!-- 表格 -->
 			<div class="table">
 				<!-- @select='SelectItem' @select-all='selectAll'  -->
-				<el-table border :data="CurrentData">
+				<el-table border :data="CurrentData" @sort-change='sortChange'>
 					<el-table-column label="实例组名称" prop='name' sortable='custom'></el-table-column>
 					<el-table-column label="操作" width='300' align='center'>
 						<template slot-scope="scope">
@@ -53,23 +53,17 @@
 				isCreate:false,//创建/编辑
 				isAlter:false,//是否是编辑状态
 		      	searchValue:'',//搜索值
-		      	listData:[],
-		        tableData: [],
 		        pageSize:25,//当前每页展示的条数
 	            currentPage:1,//当前在第几页
 	            opts:[25,100,200,10000],
-	            key:'name',//排序的关键字
-	            order:'ascending',//默认的排序的升降序
 	            instList:[],//所有云主机列表
 	            hostgroupsInfo:{}//某一个实例组的详细信息
 			}
 		},
 		created(){
 			this.$http.get('/monitor/hostgroups/').then(res=>{
-				this.listData = res.body.data;
-	    		this.tableData = this.listData.slice(0);
-	    		// 初始化排序
-				this.tableData.sort(this.compare(this.key,this.order));
+				var list = res.body.data;
+                this.$store.commit('changeData',list);
 				// 获取所有的虚拟机列表
 				this.$http.get('/noec2/instances').then(res=>{
 					this.instList = res.body.data;
@@ -80,92 +74,20 @@
 			CurrentData(){
                 var _start = ( this.currentPage - 1 ) * this.pageSize;
                 var _end = this.currentPage * this.pageSize;
-                if(this.tableData.length<_end){
-                    return this.tableData.slice(_start);
+                if(this.$store.state.tableData.length<_end){
+                    return this.$store.state.tableData.slice(_start);
                 }else{
-                    return this.tableData.slice(_start,_end);
+                    return this.$store.state.tableData.slice(_start,_end);
                 }
             },
             itemCount(){
-                return this.tableData.length;
+                return this.$store.state.tableData.length;
             }
 		},
 		methods:{
-			// 搜索功能
-            handleSearch(value){
-                var v = value.trim();
-                // var flag = this.isAccurate;
-                // 将页码重设为1
-                this.currentPage = 1;
-                this.tableData = this.listData.filter(function(item){
-                    for(var key in item){
-                        // 精确搜索
-                        // if(flag){
-                            if(String(item[key])===v){
-                                return item;
-                            } 
-                        // }else{//模糊搜索
-                        //     if(String(item[key]).indexOf(v)>=0){
-                        //         return item;
-                        //     }
-                        // }
-                    }
-                });
-                this.tableData.sort(this.compare(this.key,this.order));
-            },
-            //当搜索框为空时自动返回所有数据
-            emptySearch(value){
-                if(!value){
-                    this.tableData = this.listData.slice(0);
-                    // 重新排序
-                    this.tableData.sort(this.compare(this.key,this.order));
-                }
-            },
-            // 排序函数
-            compare(prop,order) {
-                return function (obj1, obj2) {
-                    var val1 = obj1[prop];
-                    var val2 = obj2[prop];
-                    if (!isNaN(Number(val1)) && !isNaN(Number(val2))) {
-                    	// 值为number型
-                        val1 = Number(val1);
-                        val2 = Number(val2);
-                    }else{
-                    	// 值为string型
-                    	val1 = obj1[prop].toLowerCase();
-                    	val2 = obj2[prop].toLowerCase();
-                    }
-                    if(order==='ascending'){
-                        if (val1 < val2) {
-                            return -1;
-                        } else if (val1 > val2) {
-                            return 1;
-                        } else {
-                            return 0;
-                        } 
-                    }else if(order==='descending'){
-                        if (val1 < val2) {
-                            return 1;
-                        } else if (val1 > val2) {
-                            return -1;
-                        } else {
-                            return 0;
-                        } 
-                    }
-                               
-                } 
-            },
             // 排序
 	    	sortChange(obj){
-	    		// obj中的各个属性不为null时
-	    		if(obj.order&&obj.prop){
-	    			// 当关键字或排序顺序变化时才进行排序
-	    			if(this.key!==obj.prop||this.order!==obj.order){
-	    				this.key = obj.prop;
-                    	this.order = obj.order;
-                    	this.tableData.sort(this.compare(this.key,this.order));
-	    			}
-                }
+	    		this.$store.commit('sortChange',obj);
 	    	},
 			// 翻页
             changePage(index){
@@ -184,9 +106,8 @@
             		this.searchValue = '';//清空搜索值
                     this.currentPage = 1;//当前页码为1
                     //重新获取数据
-					this.listData = res.body.data;
-					this.tableData = this.listData.slice(0);
-					this.tableData.sort(this.compare(this.key,this.order));//排序
+					var list = res.body.data;
+                	this.$store.commit('changeData',list);
 				});
             },
             //弹出创建面板
@@ -226,8 +147,8 @@
 		                instance.confirmButtonText = '执行中...';
 		                //  '/monitor/hostgroups/'+obj.id
 		            	this.$http.delete('/monitor/hostgroups/1').then(res=>{
-		            		var index = this.tableData.indexOf(obj);
-		            		this.tableData.splice(index,1);
+		            		var index = this.$store.state.tableData.indexOf(obj);
+		            		this.$store.state.tableData.splice(index,1);
 		            		this.mess = '实例组删除成功！';
 					        this.messType = 'success';
 					        // 停止loading状态

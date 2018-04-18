@@ -72,8 +72,6 @@
 			return{
 				isCreate:false,//是否创建虚拟机
 		      	searchValue:'',//搜索值
-		      	listData:[],
-		        tableData: [],
 		        pageSize:25,//当前每页展示的条数
 	            currentPage:1,//当前在第几页
 	            opts:[25,100,200,10000],
