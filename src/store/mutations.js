@@ -75,7 +75,6 @@ const mutations = {
             	state.order = obj.order;
             	if(state.order==='ascending'){
             		state.tableData.sort(function(obj1,obj2){
-            			debugger
             			return obj1[state.key].localeCompare(obj2[state.key]);
             		});                    	
             	}else if(state.order==='descending'){

@@ -22,7 +22,7 @@
 			<!-- 表格 -->
 			<div class="table">
 				<!-- @select='SelectItem' @select-all='selectAll'  -->
-				<el-table border :data="CurrentData" style="width: 100%">
+				<el-table border :data="CurrentData" @sort-change='sortChange' style="width: 100%">
 					<el-table-column label="联系人组名称" width='200' prop='team.name' sortable='custom'></el-table-column>
 					<el-table-column label="组成员">
 						<template slot-scope="scope">
@@ -136,12 +136,20 @@
 	    	sortChange(obj){
 	    		// obj中的各个属性不为null时
 	    		if(obj.order&&obj.prop){
-	    			// 当关键字或排序顺序变化时才进行排序
-	    			if(this.key!==obj.prop||this.order!==obj.order){
-	    				this.key = obj.prop;
-                    	this.order = obj.order;
-	    			}
-                }
+			// 当关键字或排序顺序变化时才进行排序
+					if(this.order!==obj.order){
+		            	this.order = obj.order;
+		            	if(this.order==='ascending'){
+		            		this.$store.state.tableData.sort(function(obj1,obj2){
+		            			return obj1.team.name.localeCompare(obj2.team.name);
+		            		});                    	
+		            	}else if(this.order==='descending'){
+		            		this.$store.state.tableData.reverse(function(obj1,obj2){
+		            			return obj1.team.name.localeCompare(obj2.team.name);
+		            		});  
+		            	}
+					}
+		        }
 	    	},
 			// 翻页
             changePage(index){
