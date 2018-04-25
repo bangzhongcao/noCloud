@@ -2,11 +2,13 @@ const state = {
     //列表内容
     listData:[],
     tableData: [], 
-    key:'name',//排序的关键字
-    order:'ascending',//默认的排序的升降序
+    key:'',//排序的关键字
+    order:'',//默认的排序的升降序
     // 屏幕大小
     Size : 'small',
     winWidth: 0,
+    iscollapse:false,//侧边栏
+    isAccurate:false,//是否精确搜索
 	 // 虚拟机状态
     Status:['RESIZE', 'REBUILD', 'BUILD', 'MIGRATING','VERIFY_RESIZE','ERROR','ACTIVE','SHUTOFF',
    'VERIFY_MIGRATING','VERIFY_NOVMMS_RESIZE', 'NOVMMS_RESIZE', 'NOVMMS_RESIZE_FAILED'],

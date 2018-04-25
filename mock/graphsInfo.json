@@ -1,0 +1,72 @@
+[
+  {
+    "endpoint": "docker-a",
+    "counter": "cpu.idle",
+    "dstype": "GAUGE",
+    "step": 60,
+    "Values": [
+      {
+        "timestamp": 1481854620,
+        "value": 98.154506
+      },
+      {
+        "timestamp": 1481854680,
+        "value": 97.864161
+      }
+    ]
+  },
+  {
+    "endpoint": "docker-a",
+    "counter": "cpu.iowait",
+    "dstype": "GAUGE",
+    "step": 60,
+    "Values": [
+      {
+        "timestamp": 1481854620,
+        "value": 0.815451
+      },
+      {
+        "timestamp": 1481854680,
+        "value": 0.598035
+      }
+    ]
+  },
+  {
+    "endpoint": "docker-b",
+    "counter": "cpu.idle",
+    "dstype": "GAUGE",
+    "step": 60,
+    "Values": [
+      {
+        "timestamp": 1481854620,
+        "value": 93.811775
+      }
+    ]
+  },
+  {
+    "endpoint": "docker-b",
+    "counter": "cpu.iowait",
+    "dstype": "GAUGE",
+    "step": 60,
+    "Values": [
+      {
+        "timestamp": 1481854620,
+        "value": 0.171895
+      }
+    ]
+  },
+  {
+    "endpoint": "docker-c",
+    "counter": "cpu.idle",
+    "dstype": "",
+    "step": 0,
+    "Values": []
+  },
+  {
+    "endpoint": "docker-c",
+    "counter": "cpu.iowait",
+    "dstype": "",
+    "step": 0,
+    "Values": []
+  }
+]

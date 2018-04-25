@@ -6,7 +6,7 @@
 				<el-button type="primary" class='f-l' icon="fa fa-plus" plain @click='createInstGroup'>&nbsp;新建实例组</el-button>
 				<!-- 刷新、导出 -->
 				<div class="table-btn f-r">
-					<el-button icon="fa fa-refresh" title='刷新' @click='refresh'></el-button>
+					<el-button icon="fa fa-refresh" title='全部刷新' @click='refresh'></el-button>
 				</div>
 				<!-- 搜索 -->
 				<div class='search f-r p-r'>

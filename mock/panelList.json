@@ -1,0 +1,48 @@
+[
+  {
+    "id": 1,
+    "name": "qxcustomscreen01",
+    "type": "custom"
+  },
+  {
+    "id": 2,
+    "name": "qxcustomscreen02",
+    "type": "custom"
+  },
+  {
+    "id": 3,
+    "name": "qxcustomscreen03",
+    "type": "custom"
+  },
+  {
+    "id": 4,
+    "name": "qxcustomscreen04",
+    "type": "custom"
+  },
+  {
+    "id": 5,
+    "name": "qxcustomscreen05",
+    "type": "custom"
+  },
+  {
+    "id": 6,
+    "name": "qxcustomscreen06",
+    "type": "custom"
+  },
+  {
+    "id": 7,
+    "name": "qxcustomscreen07",
+    "type": "custom"
+  },
+  {
+    "id": 8,
+    "name": "qxcustomscreen08",
+    "type": "custom"
+  },
+  {
+    "id": 9,
+    "name": "qxcustomscreen09",
+    "type": "custom"
+  }
+
+]

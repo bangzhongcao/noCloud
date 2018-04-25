@@ -2,7 +2,7 @@
   <div id="app">
   	<top-bar></top-bar>
   	<slider @collapse='collapsePanel'></slider>
-  	<div class='content-panel' :class="iscollapse?'collapsePanel':''">
+  	<div class='content-panel' :class="$store.state.iscollapse?'collapsePanel':''">
   		<router-view></router-view>
   	</div>
   </div>
@@ -13,11 +13,6 @@ import topBar from 'base/top-bar/top-bar';
 import slider from 'base/Slider/slider';
 
 export default {
-	data(){
-		return{
-			iscollapse:false
-		}
-	},
 	components:{topBar,slider},
 	created(){
 		if(window.url!=='{{ route }}'){
@@ -30,7 +25,7 @@ export default {
 	},
 	methods:{
 		collapsePanel(flag){
-			this.iscollapse = flag;
+			this.$store.state.iscollapse = flag;
 		}
 	}
 }

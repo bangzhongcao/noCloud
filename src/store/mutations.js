@@ -27,6 +27,12 @@ const mutations = {
 			state.Size = 'mini';
 		}
 	},
+	// echart自适应
+	// changeChartSize(state){
+	// 	if(state.iscollapse){
+	// 		console.log
+	// 	}
+	// }
 	// 列表内容赋值
 	changeData(state,n){
 		// debugger
@@ -42,15 +48,15 @@ const mutations = {
         state.tableData = state.listData.filter(function(item){
             for(var key in item){
                 // 精确搜索
-                // if(flag){
+                 if(state.isAccurate){
                     if(String(item[key])===v){
                         return item;
                     } 
-                // }else{//模糊搜索
-                //     if(String(item[key]).indexOf(v)>=0){
-                //         return item;
-                //     }
-                // }
+                 }else{//模糊搜索
+                    if(String(item[key]).indexOf(v)>=0){
+                        return item;
+                    }
+                }
             }
         });
         // 重新排序

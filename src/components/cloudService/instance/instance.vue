@@ -19,11 +19,12 @@
 				</el-dropdown>
 				<!-- 刷新、导出 -->
 				<div class="table-btn f-r">
-					<el-button icon="fa fa-refresh" title='刷新' @click='refresh'></el-button>
+					<el-button icon="fa fa-refresh" title='全部刷新' @click='refresh'></el-button>
 					<el-button icon="fa fa-cog" title='设置字表列段' @click='settingColumn'></el-button>
 				</div>
 				<!-- 搜索 -->
 				<div class='search f-r p-r'>
+					<!-- <el-checkbox class='accurate' v-model="$store.state.isAccurate">精确搜索</el-checkbox> -->
 					<input type="text" v-model="searchValue" @keyup.enter="$store.commit('handleSearch',searchValue)" @input="$store.commit('emptySearch',searchValue)" placeholder="请输入内容">
 					<el-button slot="append" icon="el-icon-search" @click="$store.commit('handleSearch',searchValue)" class='search-btn p-a' ></el-button>
 				</div>
@@ -384,9 +385,9 @@
                     // this.$store.state.listData = this.initData(res.body.data);
                     this.searchValue = '';//清空搜索值
                     this.currentPage = 1;//当前页码为1
-                    this.$store.state.listData = res.body.data;//重新获取数据
-                    this.$store.state.tableData = this.$store.state.listData.slice(0);//将其赋值给要展示的数组列表
-                    // this.sortChange({prop:'name',order:'descending'});//保留排序
+                    //重新获取数据
+					var list = res.body.data;
+                	this.$store.commit('changeData',list);
                 });
             },
             // 设置表格列
@@ -561,6 +562,9 @@
 					max-width: 320px;
 					margin-right: 20px;
 					padding-right:56px;
+					// .accurate{
+					// 	width: 20%;
+					// }
 					input{
 						width: 100%;
 						height: 38px;

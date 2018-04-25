@@ -1,17 +1,17 @@
 <template>
 	<div class="panel">
-		<div class="panel-list" v-if='!isCreate'>
+		<div class="panel-list" v-if='!isDefined'>
 			<div class="btn-group">
 				<!-- 操作按钮组 -->
-				<el-button type="primary" class='f-l' icon="fa fa-plus" plain>&nbsp;新建面板</el-button>
+				<el-button type="primary" class='f-l' icon="fa fa-plus" plain @click='dialogFormVisible=true'>&nbsp;新建面板</el-button>
 				<!-- 刷新、导出 -->
 				<div class="table-btn f-r">
-					<el-button icon="fa fa-refresh" title='刷新' @click='refresh'></el-button>
+					<el-button icon="fa fa-refresh" title='全部刷新' @click='refresh'></el-button>
 				</div>
 				<!-- 搜索 -->
 				<div class='search f-r p-r'>
-					<input type="text" v-model="searchValue" @keyup.enter='handleSearch(searchValue)' @input='emptySearch(searchValue)' placeholder="请输入内容">
-					<el-button slot="append" icon="el-icon-search" @click='handleSearch(searchValue)' class='search-btn p-a' ></el-button>
+					<input type="text" v-model="searchValue" @keyup.enter="$store.commit('handleSearch',searchValue)" @input="$store.commit('emptySearch',searchValue)" placeholder="请输入内容">
+					<el-button slot="append" icon="el-icon-search" @click="$store.commit('handleSearch',searchValue)" class='search-btn p-a' ></el-button>
 				</div>
 			</div>
 			<!-- 分页 -->
@@ -22,33 +22,15 @@
 			<!-- 表格 -->
 			<div class="table">
 				<!-- @select='SelectItem' @select-all='selectAll'  -->
-				<el-table border :data="CurrentData">
-					<el-table-column label="面板名称"></el-table-column>
-					<el-table-column label="视图个数"></el-table-column>
-					<el-table-column label="创建时间">
-						<template slot-scope="scope">
-					        <i class="el-icon-time"></i>
-					        <!-- <span>{{ scope.row.created }}</span> -->
-				        </template>
-					</el-table-column>
-				<!-- 	<el-table-column v-if='setColumn.volumes' key='volumes'  label="存储卷">
-						<template slot-scope="scope">
-							<el-popover trigger="hover" placement="top">
-								<p>姓名: {{ scope.row.volumes }}</p>
-								<div slot="reference">
-									<el-tag size="medium" class='name-wrapper'>{{ scope.row.volumes }}</el-tag>
-								</div>
-							</el-popover>
+				<el-table border :data="CurrentData" @sort-change='sortChange'>
+					<el-table-column label="面板名称" sortable='custom' prop='name'>
+						<template slot-scope='scope'>
+							<el-button type='text' @click='getPanelGraph(scope.row.id,scope.row.name)'>{{scope.row.name}}</el-button>
 						</template>
 					</el-table-column>
-					<el-table-column v-if='setColumn.created' key='created' label="创建时间" sortable='custom'>
+					<el-table-column label="操作" width='300' align='center'>
 						<template slot-scope="scope">
-					        <i class="el-icon-time"></i>
-					        <span>{{ scope.row.created }}</span>
-				        </template>
-					</el-table-column> -->
-					<el-table-column label="操作" width='160' align='center'>
-						<template slot-scope="scope">
+							<el-button type="primary" plain size='small'>编辑</el-button>
 							<el-button type="danger" plain size='small'>删除</el-button>
 						</template>
 					</el-table-column>
@@ -60,43 +42,75 @@
 			    </el-pagination>
 			</div>
 		</div>
-		<!-- <div class="createInstance" v-if='isCreate'>
-			<create-instance @cancel-create='CancleCreate'></create-instance>
-		</div> -->
+		<!-- 面板监控图 -->
+		<div class="graphsPanel" v-if='isDefined'>
+			<GraphsPanel @cancel-define='CancleDefine' :panels-id='panelID' :panel-name='panelName'></GraphsPanel>
+		</div>
+		<!-- 创建面板 -->
+		<el-dialog title="创建面板" :visible.sync="dialogFormVisible" width="30%" :show-close='false' center>
+			<el-form :model="createForm" :rules="createRules" ref="createForm" size='medium' label-width="80px" label-position='right'>
+				<el-form-item label="面板名称" prop='name'>
+					<el-input v-model.trim="createForm.name" placeholder="请输入面板名称" class='dialog-item'></el-input>
+				</el-form-item>
+			</el-form>
+			<span slot="footer" class="dialog-footer">
+			    <el-button @click="dialogFormVisible = false">取 消</el-button>
+			    <el-button type="primary" @click="submitDialog('createForm')">确 定</el-button>
+			</span>
+		</el-dialog>
 	</div>
 </template>
 
 <script type="text/javascript">
+	import GraphsPanel from './panelGraphs.vue';
 	export default {
+		components:{GraphsPanel},
 		data(){
 			return{
-				isCreate:false,//是否创建虚拟机
+				isDefined:false,//是否自定义
+				dialogFormVisible:false,//是否创建面板
 		      	searchValue:'',//搜索值
 		        pageSize:25,//当前每页展示的条数
 	            currentPage:1,//当前在第几页
 	            opts:[25,100,200,10000],
-	            key:'name',//排序的关键字
-	            order:'ascending'//默认的排序的升降序
+	            panelID:'',//面板的ID
+	            panelName:'',//面板名称
+	            createForm:{
+	      			name:''
+	      		},
+	      		createRules:{
+	      			name:[
+	      				{ required: true, message: '请输入面板名称', trigger: 'change' }
+	      			]
+	      		}
 			}
 		},
 		created(){
-			this.tableData = [{}]
+			this.$http.get('/monitor/screens/').then(res=>{
+				var list = res.body.data;
+				console.log(list);
+                this.$store.commit('changeData',list);
+	    	});
 		},
 		computed:{
 			CurrentData(){
                 var _start = ( this.currentPage - 1 ) * this.pageSize;
                 var _end = this.currentPage * this.pageSize;
-                if(this.tableData.length<_end){
-                    return this.tableData.slice(_start);
+                if(this.$store.state.tableData.length<_end){
+                    return this.$store.state.tableData.slice(_start);
                 }else{
-                    return this.tableData.slice(_start,_end);
+                    return this.$store.state.tableData.slice(_start,_end);
                 }
             },
             itemCount(){
-                return this.tableData.length;
+                return this.$store.state.tableData.length;
             }
 		},
 		methods:{
+			// 排序
+			sortChange(obj){
+				this.$store.commit('sortChange',obj);
+			},
 			// 翻页
             changePage(index){
                 this.currentPage = index;
@@ -109,7 +123,53 @@
                 window.scrollTo(0, 0);
             },
             // 刷新
-            refresh(){}
+            refresh(){
+            	this.$http.get('/monitor/screens/').then(res=>{
+                    this.searchValue = '';//清空搜索值
+                    this.currentPage = 1;//当前页码为1
+                    //重新获取数据
+					var list = res.body.data;
+                	this.$store.commit('changeData',list);
+                });
+            },
+            // 创建面板
+			submitDialog(formName){
+				if(formName){
+					this.$refs[formName].validate((valid) => {
+						if (valid) {
+							this.$http.post('/monitor/screens/',{"name":this.createForm.name}).then(res=>{
+								// 提交面板名称
+								var response = res.body.data;
+								if(response.id){
+									this.$store.state.listData.unshift(response);
+									this.$store.state.tableData = this.$store.state.listData.slice(0);
+									this.$message({
+							          message: '自定义面板创建成功！',
+							          type: 'success'
+							        });
+								}else{
+									this.$message.error('创建失败，该面板名称已经存在！');
+								}
+								this.dialogFormVisible = false;
+							})
+						}
+					});
+				}
+			},
+            // 获取面板中的监控图
+            getPanelGraph(id,name){
+            	this.panelID = id;
+            	this.panelName = name;
+            	console.log(this.panelName);
+            	this.isDefined = true;
+            },
+            // 关闭面板监控图页面
+            CancleDefine(v){
+            	if(v){
+            		this.refresh();
+            	}
+            	this.isDefined = false;
+            }
 		}
 	};
 </script>

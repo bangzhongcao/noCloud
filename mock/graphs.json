@@ -1,0 +1,56 @@
+[
+  {
+    "id": 14067,
+    "screen_id": 2190,
+    "title": "eee",
+    "hostgroups": [
+      780,
+      21
+    ],
+    "hosts": [
+      "10.18.32.21"
+    ],
+    "endpoints": [
+      "10.16.68.100",
+      "10.18.0.14",
+      "10.18.0.15",
+      "10.18.32.100",
+      "10.18.32.21"
+    ],
+    "counters": [
+      "agent.live",
+      "cpu.busy"
+    ],
+    "timespan": 3600,
+    "graph_type": "h",
+    "method": "",
+    "position": 0
+  },
+  {
+    "id": 14032,
+    "screen_id": 2111,
+    "title": "eee",
+    "hostgroups": [
+      1780,
+      221,
+      34
+    ],
+    "hosts": [
+      "10.18.32.21"
+    ],
+    "endpoints": [
+      "10.16.68.100",
+      "10.18.0.14",
+      "10.18.0.15"
+    ],
+    "counters": [
+      "cpu.busy",
+      "mem.memused.percent",
+      "disk.io.util/device=vdb"
+    ],
+    "timespan": 3600,
+    "graph_type": "h",
+    "method": "",
+    "position": 0
+  }
+]

@@ -9,6 +9,11 @@ import store from './store';
 import 'font-awesome/css/font-awesome.min.css'
 import 'common/less/index.less';
 
+// 引入echarts
+import echarts from 'echarts'
+
+Vue.prototype.$echarts = echarts 
+
 Vue.use(ElementUI);
 Vue.use(vueResource);
 Vue.config.productionTip = false;

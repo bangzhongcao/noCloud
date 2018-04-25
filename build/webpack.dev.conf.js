@@ -33,6 +33,9 @@ const certainHostsData = require('../mock/certain_hostGroup.json');
 const hostInfoData = require('../mock/hostgroupsInfo.json');
 const teamListData = require('../mock/teamList.json');
 const teamUsersData = require('../mock/teamUserInfo.json');
+const panelsData = require('../mock/panelList.json');
+const graphsData = require('../mock/graphs.json');
+const graphsInfoData = require('../mock/graphsInfo.json');
 
 const devWebpackConfig = merge(baseWebpackConfig, {
   module: {
@@ -197,6 +200,28 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       // 删除联系人组
       app.delete('/monitor/teams/1/',(req,res)=>{
         res.json({status:true});
+      });
+      // 获取面板组
+      app.get('/monitor/screens/',(req,res)=>{
+        res.json({data:panelsData});
+      });
+      // 创建面板
+      // 获取面板组
+      app.post('/monitor/screens/',(req,res)=>{
+        var CreatePanel = {
+          "id": 17,
+          "name": "cbzscreen01",
+          "type": "custom"
+        }
+        res.json({data:CreatePanel});
+      });
+      // 获取面板中的监控图
+      app.get('/monitor/screens/1/graphs/',(req,res)=>{
+        res.json({data:graphsData});
+      });
+      // 获取面板中的监控图的详细信息
+      app.post('/monitor/history/',(req,res)=>{
+        res.json({data:graphsInfoData});
       });
     },
     clientLogLevel: 'warning',
